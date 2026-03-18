@@ -51,4 +51,4 @@ jobs:
         run: |
           corepack pnpm examples:publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_LYNX_EXAMPLES }}
