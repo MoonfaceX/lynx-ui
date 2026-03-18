@@ -1,7 +1,9 @@
 import { pluginQRCode } from '@lynx-js/qrcode-rsbuild-plugin'
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin'
 
-export const exampleConfig = (entry, needWeb = true) => {
+export const exampleConfig = (entry, options = {}) => {
+  const needWeb =
+    typeof options === 'boolean' ? options : (options.needWeb ?? true)
   return {
     environments: needWeb
       ? {
@@ -19,7 +21,7 @@ export const exampleConfig = (entry, needWeb = true) => {
         intermediate: '.rspeedy',
         root: 'dist',
       },
-      filename: '[name]/[platform].template.js',
+      filename: '[name].[platform].bundle',
     },
     tools: {
       rspack: {
