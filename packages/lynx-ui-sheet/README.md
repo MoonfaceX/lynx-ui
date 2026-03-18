@@ -1,47 +1,61 @@
-# Sheet
+# @lynx-js/lynx-ui-sheet
 
-An extension of the Dialog.
+`@lynx-js/lynx-ui-sheet` provides the **Sheet** primitives in lynx-ui.
+
+## Introduction
+
+Bottom sheet primitives for backdrop/content/handle composition and snap control.
 
 ## Installation
 
 ```bash
-npm install @lynx-js/lynx-ui-sheet
+pnpm add @lynx-js/lynx-ui-sheet
 ```
 
-## Basic Usage
+## Usage
 
-```jsx
-import { useState } from '@lynx-js/react'
-import { SheetRoot, SheetHandle, SheetContent } from '@lynx-js/lynx-ui-sheet'
+```tsx
+import {
+  SheetRoot,
+  SheetBackdrop,
+  SheetContent,
+  SheetHandle,
+} from '@lynx-js/lynx-ui-sheet'
 
-function App() {
-  const [show, setShow] = useState(false)
-
+export function BasicSheet() {
   return (
-    <view>
-      <text bindtap={() => setShow(true)}>Open Sheet</text>
-      <SheetRoot show={show} onShowChange={setShow}>
-        <SheetContent>
-          <SheetHandle />
-          <text>Hello World</text>
-        </SheetContent>
-      </SheetRoot>
-    </view>
+    <SheetRoot>
+      <SheetBackdrop />
+      <SheetContent>
+        <SheetHandle />
+      </SheetContent>
+    </SheetRoot>
   )
 }
 ```
 
-## Structure
+## Public exports
 
-```jsx
-<SheetRoot>
-  <SheetView>
-    <SheetBackdrop />
-    <SheetContent />
-  </SheetView>
-</SheetRoot>
+```ts
+export { SheetRoot } from './SheetRoot'
+export type { SheetRootRef } from './SheetRoot'
+export { SheetBackdrop } from './SheetBackdrop'
+export { SheetContent } from './SheetContent'
+export { SheetHandle } from './SheetHandle'
+export { SheetView } from './SheetView'
+export { useSnap } from './hooks'
+export type {
+  SheetBackdropProps,
+  SheetContentProps,
+  SheetRootProps,
+  SheetViewProps,
+  SheetHandleProps,
+  SheetTransition,
+} from './types'
 ```
 
-## API
+> The export list above is generated from `src/index.ts` or `src/index.tsx` in this package.
 
-For detailed API reference, please check the source code or generated documentation.
+## License
+
+Apache-2.0
