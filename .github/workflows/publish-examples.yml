@@ -44,11 +44,39 @@ jobs:
           npm install -g corepack@latest
           corepack enable && corepack prepare
           corepack pnpm install --frozen-lockfile
-      - name: Build Examples
+      - name: Detect changed examples
+        id: changed
         run: |
-          corepack pnpm examples:build
-      - name: Publish Examples
+          # Use turbo's dependency-aware filter to find example packages
+          # affected by changes since the previous commit (including transitive deps).
+          CHANGED=$(corepack pnpm turbo build --filter='./apps/examples/*...[HEAD^]' --dry-run=json \
+            | node -e "
+              const data = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
+              const names = (data.tasks || [])
+                .map(t => t.directory)
+                .filter(d => d.startsWith('apps/examples/'))
+                .map(d => d.replace('apps/examples/', ''));
+              console.log(names.join(','));
+            ")
+          echo "examples=$CHANGED" >> "$GITHUB_OUTPUT"
+          if [ -z "$CHANGED" ]; then
+            echo "No examples changed — skipping publish."
+          else
+            echo "Changed examples: $CHANGED"
+          fi
+      - name: Build changed examples
+        if: steps.changed.outputs.examples != ''
         run: |
-          corepack pnpm examples:publish
+          corepack pnpm turbo build --filter='./apps/examples/*...[HEAD^]'
+      - name: Publish changed examples
+        if: steps.changed.outputs.examples != ''
+        run: |
+          # Convert comma-separated list to --filter flags
+          FILTER_ARGS=""
+          IFS=',' read -ra COMPONENTS <<< "${{ steps.changed.outputs.examples }}"
+          for comp in "${COMPONENTS[@]}"; do
+            FILTER_ARGS="$FILTER_ARGS --filter $comp"
+          done
+          corepack pnpm examples:publish $FILTER_ARGS
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_LYNX_EXAMPLES }}
