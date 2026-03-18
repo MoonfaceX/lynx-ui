@@ -3,11 +3,11 @@
 // LICENSE file in the root directory of this source tree.
 
 /**
- * Publishes each lynx-ui example variant as an @lynx-example/* npm package
- * so it can be consumed by the go-web <Go> component.
+ * Publishes each lynx-ui example variant as an npm package in the
+ * `@lynx-example` scope so it can be consumed by the go-web `<Go>` component.
  *
- * Each variant (e.g. apps/examples/Button/Basic/) becomes its own package:
- *   @lynx-example/lynx-ui-button-basic
+ * Each variant (e.g. apps/examples/Button/Basic/) becomes its own package,
+ * for example `@lynx-example/lynx-ui-button-basic`.
  *
  * Published package layout:
  *   Basic/          ← variant source files
@@ -25,10 +25,10 @@
  *   pnpm examples:publish [-- --dry-run]
  */
 
-import fs from 'node:fs'
-import path from 'node:path'
-import os from 'node:os'
 import { execSync } from 'node:child_process'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -37,7 +37,7 @@ const examplesRoot = path.join(repoRoot, 'apps/examples')
 
 const dryRun = process.argv.includes('--dry-run')
 const tagIdx = process.argv.indexOf('--tag')
-const tag = tagIdx !== -1 ? process.argv[tagIdx + 1] : 'latest'
+const tag = tagIdx === -1 ? 'latest' : process.argv[tagIdx + 1]
 
 // Dirs to never copy into a published package
 const IGNORE_DIRS = new Set(['node_modules', 'dist', '.rspeedy', '.turbo'])
@@ -48,7 +48,7 @@ const IGNORE_FILES = new Set(['.DS_Store'])
 function toKebab(s) {
   return s
     .replace(/([A-Z])/g, (ch, _, i) => (i > 0 ? '-' : '') + ch.toLowerCase())
-    .replace(/--+/g, '-')
+    .replace(/-{2,}/g, '-')
     .replace(/^-|-$/g, '')
 }
 
@@ -103,11 +103,13 @@ for (const component of componentDirs) {
   const entries = parseEntries(path.join(componentDir, 'lynx.config.mjs'))
 
   if (Object.keys(entries).length === 0) {
-    console.warn(`[${component}] No entries found in lynx.config.mjs — skipping`)
+    console.warn(
+      `[${component}] No entries found in lynx.config.mjs — skipping`,
+    )
     continue
   }
 
-  // Shared dirs: subdirs in the component root that are not variant source dirs
+  // Shared directories in the component root that are not variant source directories
   const entrySources = new Set(Object.values(entries))
   const sharedDirs = fs.readdirSync(componentDir).filter((name) => {
     const p = path.join(componentDir, name)
@@ -124,14 +126,15 @@ for (const component of componentDirs) {
     if (!fs.existsSync(lynxBundle)) {
       console.warn(
         `  ⚠ ${entryName}: ${entryName}.lynx.bundle not found`
-        + ` — run \`pnpm examples:build\` first`,
+          + ` — run \`pnpm examples:build\` first`,
       )
       skipped++
       continue
     }
 
-    const pkgName
-      = `@lynx-example/lynx-ui-${toKebab(component)}-${toKebab(variantDir)}`
+    const pkgName = `@lynx-example/lynx-ui-${toKebab(component)}-${
+      toKebab(variantDir)
+    }`
     const tmpDir = path.join(
       os.tmpdir(),
       'lynx-ui-publish-examples',
@@ -195,5 +198,7 @@ for (const component of componentDirs) {
 }
 
 console.log(
-  `\n${dryRun ? '[dry-run] ' : ''}${published} package(s) ${dryRun ? 'would be ' : ''}published, ${skipped} skipped.`,
+  `\n${dryRun ? '[dry-run] ' : ''}${published} package(s) ${
+    dryRun ? 'would be ' : ''
+  }published, ${skipped} skipped.`,
 )
