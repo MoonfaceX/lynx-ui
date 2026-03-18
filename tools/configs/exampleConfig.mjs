@@ -2,8 +2,9 @@ import { pluginQRCode } from '@lynx-js/qrcode-rsbuild-plugin'
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin'
 
 export const exampleConfig = (entry, options = {}) => {
-  const needWeb =
-    typeof options === 'boolean' ? options : (options.needWeb ?? true)
+  const needWeb = typeof options === 'boolean'
+    ? options
+    : (options.needWeb ?? true)
   return {
     environments: needWeb
       ? {
