@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-radio-group
 
-`@lynx-js/lynx-ui-radio-group` provides the **RadioGroup** primitives in lynx-ui.
+`@lynx-js/lynx-ui-radio-group` provides the `RadioGroup` primitives in
+lynx-ui.
 
 ## Introduction
 
-Headless radio group primitives for controlled option selection.
+`RadioGroupRoot` owns the selected value, while each `Radio` registers an
+option and `RadioIndicator` renders the selected marker. The examples cover
+controlled selection and disabled states.
 
 ## Installation
 
@@ -15,25 +18,37 @@ pnpm add @lynx-js/lynx-ui-radio-group
 ## Usage
 
 ```tsx
+import { useState } from '@lynx-js/react'
 import {
-  RadioGroupRoot,
   Radio,
+  RadioGroupRoot,
   RadioIndicator,
 } from '@lynx-js/lynx-ui-radio-group'
 
 export function BasicRadioGroup() {
+  const [value, setValue] = useState('light')
+
   return (
-    <RadioGroupRoot value='a' onValueChange={() => {}}>
-      <Radio value='a'>
-        <RadioIndicator />A
+    <RadioGroupRoot value={value} onValueChange={setValue}>
+      <Radio value='light'>
+        <RadioIndicator>
+          <text>•</text>
+        </RadioIndicator>
+        <text>Light</text>
       </Radio>
-      <Radio value='b'>
-        <RadioIndicator />B
+      <Radio value='dark'>
+        <RadioIndicator>
+          <text>•</text>
+        </RadioIndicator>
+        <text>Dark</text>
       </Radio>
     </RadioGroupRoot>
   )
 }
 ```
+
+Set `defaultValue` for uncontrolled usage, or mark the whole group or
+individual radios as `disabled`.
 
 ## Public exports
 

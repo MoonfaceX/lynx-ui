@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-popover
 
-`@lynx-js/lynx-ui-popover` provides the **Popover** primitives in lynx-ui.
+`@lynx-js/lynx-ui-popover` provides the `Popover` primitives in lynx-ui.
 
 ## Introduction
 
-Composable popover primitives with anchor, trigger, backdrop, positioner, and arrow support.
+`Popover` anchors floating content to a trigger or custom anchor. The examples
+cover basic positioning, controlled visibility with `show` and
+`onVisibleChange`, optional backdrops, custom arrows, extra anchors, and usage
+inside scrollable containers.
 
 ## Installation
 
@@ -16,29 +19,34 @@ pnpm add @lynx-js/lynx-ui-popover
 
 ```tsx
 import {
+  PopoverContent,
+  PopoverPositioner,
   PopoverRoot,
   PopoverTrigger,
-  PopoverBackdrop,
-  PopoverPositioner,
-  PopoverContent,
-  PopoverArrow,
 } from '@lynx-js/lynx-ui-popover'
 
 export function BasicPopover() {
   return (
     <PopoverRoot>
-      <PopoverTrigger>Open</PopoverTrigger>
-      <PopoverBackdrop />
-      <PopoverPositioner>
-        <PopoverContent>
-          <PopoverArrow />
-          Content
-        </PopoverContent>
-      </PopoverPositioner>
+      <PopoverTrigger>
+        <text>Show Popover</text>
+
+        <PopoverPositioner
+          placement='bottom-end'
+          placementOffset={12}
+        >
+          <PopoverContent>
+            <text>Popover content</text>
+          </PopoverContent>
+        </PopoverPositioner>
+      </PopoverTrigger>
     </PopoverRoot>
   )
 }
 ```
+
+Add `PopoverBackdrop` for outside-click dismissal, or switch to a controlled
+`PopoverRoot` when the parent owns visibility state.
 
 ## Public exports
 

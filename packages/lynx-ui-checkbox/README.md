@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-checkbox
 
-`@lynx-js/lynx-ui-checkbox` provides the **Checkbox** primitives in lynx-ui.
+`@lynx-js/lynx-ui-checkbox` provides the `Checkbox` primitives in lynx-ui.
 
 ## Introduction
 
-Composable checkbox primitives with indicator support for checked and indeterminate states.
+`Checkbox` supports uncontrolled and controlled usage, plus an
+`indeterminate` state for "select all" patterns. The examples cover basic
+selection, controlled updates, disabled items, and an indeterminate parent
+checkbox that drives a group.
 
 ## Installation
 
@@ -15,16 +18,27 @@ pnpm add @lynx-js/lynx-ui-checkbox
 ## Usage
 
 ```tsx
+import { useState } from '@lynx-js/react'
 import { Checkbox, CheckboxIndicator } from '@lynx-js/lynx-ui-checkbox'
 
 export function BasicCheckbox() {
+  const [checked, setChecked] = useState(false)
+
   return (
-    <Checkbox checked={true} onCheckedChange={() => {}}>
-      <CheckboxIndicator>✓</CheckboxIndicator>
-    </Checkbox>
+    <view>
+      <Checkbox checked={checked} onChange={setChecked}>
+        <CheckboxIndicator>
+          <text>{checked ? '✓' : ''}</text>
+        </CheckboxIndicator>
+      </Checkbox>
+      <text>{checked ? 'Checked' : 'Unchecked'}</text>
+    </view>
   )
 }
 ```
+
+Set `indeterminate={true}` on the parent checkbox to match the "some children
+selected" state shown in the `Indeterminate` example.
 
 ## Public exports
 

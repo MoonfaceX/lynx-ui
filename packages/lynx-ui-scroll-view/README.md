@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-scroll-view
 
-`@lynx-js/lynx-ui-scroll-view` provides the **ScrollView** primitives in lynx-ui.
+`@lynx-js/lynx-ui-scroll-view` provides the `ScrollView` component in lynx-ui.
 
 ## Introduction
 
-Scroll view primitive with optional lazy rendering and bounce handling.
+`ScrollView` supports horizontal and vertical scrolling, optional lazy
+rendering, bounce behavior, and scroll-propagation control. The examples show a
+horizontal card rail and how flex children behave inside the scrollable
+content area.
 
 ## Installation
 
@@ -17,14 +20,25 @@ pnpm add @lynx-js/lynx-ui-scroll-view
 ```tsx
 import { ScrollView } from '@lynx-js/lynx-ui-scroll-view'
 
+const items = ['L', 'Y', 'N', 'X']
+
 export function BasicScrollView() {
   return (
-    <ScrollView scrollOrientation='vertical' style={{ height: '100%' }}>
-      <text>Scrollable content</text>
+    <ScrollView scrollOrientation='horizontal' style={{ height: '120px' }}>
+      <view style={{ display: 'flex', flexDirection: 'row' }}>
+        {items.map((item) => (
+          <view key={item} style={{ width: '80px' }}>
+            <text>{item}</text>
+          </view>
+        ))}
+      </view>
     </ScrollView>
   )
 }
 ```
+
+Tune lazy rendering through `lazyOptions`, and use `bounceableOptions` when you
+need bounce behavior outside the default iOS handling.
 
 ## Public exports
 

@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-overlay
 
-`@lynx-js/lynx-ui-overlay` provides the **Overlay** primitives in lynx-ui.
+`@lynx-js/lynx-ui-overlay` provides the `OverlayView` component in lynx-ui.
 
 ## Introduction
 
-Overlay view primitive for layering content above the base UI tree.
+`OverlayView` renders content above the normal UI tree and is used internally
+by components such as `dialog`, `popover`, and `sheet`. Use it directly when
+you need to manage overlay layering yourself or place content in a native
+container.
 
 ## Installation
 
@@ -18,9 +21,18 @@ pnpm add @lynx-js/lynx-ui-overlay
 import { OverlayView } from '@lynx-js/lynx-ui-overlay'
 
 export function BasicOverlay() {
-  return <OverlayView>Overlay content</OverlayView>
+  return (
+    <OverlayView>
+      <view>
+        <text>Overlay content</text>
+      </view>
+    </OverlayView>
+  )
 }
 ```
+
+Set `container` and `overlayLevel` only when the overlay should be rendered in
+a specific native container.
 
 ## Public exports
 

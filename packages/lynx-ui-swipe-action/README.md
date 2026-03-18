@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-swipe-action
 
-`@lynx-js/lynx-ui-swipe-action` provides the **SwipeAction** primitives in lynx-ui.
+`@lynx-js/lynx-ui-swipe-action` provides the `SwipeAction` component in
+lynx-ui.
 
 ## Introduction
 
-Swipe action container for exposing contextual actions via horizontal gestures.
+`SwipeAction` reveals an action area with horizontal gestures or imperative ref
+methods. The examples show single-item usage, integration inside a scroll view,
+and programmatic toggling through `showActionArea` and `closeActionArea`.
 
 ## Installation
 
@@ -15,25 +18,42 @@ pnpm add @lynx-js/lynx-ui-swipe-action
 ## Usage
 
 ```tsx
+import { useRef } from '@lynx-js/react'
 import { SwipeAction } from '@lynx-js/lynx-ui-swipe-action'
+import type { SwipeActionRef } from '@lynx-js/lynx-ui-swipe-action'
 
 export function BasicSwipeAction() {
+  const swipeActionRef = useRef<SwipeActionRef>(null)
+
   return (
-    <SwipeAction
-      displayArea={
-        <view>
-          <text>Item</text>
-        </view>
-      }
-      actionArea={
-        <view>
-          <text>Delete</text>
-        </view>
-      }
-    />
+    <view>
+      <SwipeAction
+        ref={swipeActionRef}
+        swipeActionId='item-1'
+        enableSwipe={true}
+        displayArea={
+          <view>
+            <text>Item</text>
+          </view>
+        }
+        actionArea={
+          <view>
+            <text>Delete</text>
+          </view>
+        }
+        onAction={(id) => console.info('action', id)}
+      />
+
+      <view bindtap={() => swipeActionRef.current?.showActionArea(true)}>
+        <text>Show actions</text>
+      </view>
+    </view>
   )
 }
 ```
+
+Use `onSwipeStart` and `onSwipeEnd` to react to gesture state, or set
+`estimatedActionAreaSize` when the action area lives inside a reused list item.
 
 ## Public exports
 

@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-dialog
 
-`@lynx-js/lynx-ui-dialog` provides the **Dialog** primitives in lynx-ui.
+`@lynx-js/lynx-ui-dialog` provides the `Dialog` primitives in lynx-ui.
 
 ## Introduction
 
-Headless dialog primitives for trigger/content/backdrop composition and open-state control.
+`Dialog` is composed from `DialogRoot`, `DialogTrigger`, `DialogView`,
+`DialogBackdrop`, `DialogContent`, and `DialogClose`. The examples cover
+controlled and uncontrolled open state, force-mounted content, and animation
+status via render props.
 
 ## Installation
 
@@ -15,26 +18,41 @@ pnpm add @lynx-js/lynx-ui-dialog
 ## Usage
 
 ```tsx
+import { useState } from '@lynx-js/react'
 import {
+  DialogBackdrop,
+  DialogClose,
+  DialogContent,
   DialogRoot,
   DialogTrigger,
-  DialogBackdrop,
-  DialogContent,
-  DialogClose,
+  DialogView,
 } from '@lynx-js/lynx-ui-dialog'
 
 export function BasicDialog() {
+  const [show, setShow] = useState(false)
+
   return (
-    <DialogRoot>
-      <DialogTrigger>Open</DialogTrigger>
-      <DialogBackdrop />
-      <DialogContent>
-        <DialogClose>Close</DialogClose>
-      </DialogContent>
+    <DialogRoot show={show} onShowChange={setShow}>
+      <DialogTrigger>
+        <text>Open Dialog</text>
+      </DialogTrigger>
+
+      <DialogView>
+        <DialogBackdrop />
+        <DialogContent>
+          <text>Dialog content</text>
+          <DialogClose>
+            <text>Close</text>
+          </DialogClose>
+        </DialogContent>
+      </DialogView>
     </DialogRoot>
   )
 }
 ```
+
+Use `defaultShow` for uncontrolled dialogs, and `forceMount` when the dialog
+content should stay mounted even while hidden.
 
 ## Public exports
 

@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-common
 
-`@lynx-js/lynx-ui-common` provides the **Common** primitives in lynx-ui.
+`@lynx-js/lynx-ui-common` provides shared hooks, helpers, and reactive
+utilities for lynx-ui packages.
 
 ## Introduction
 
-Shared hooks, constants, event helpers, and reactive utilities used across lynx-ui packages.
+This package is the shared foundation for components such as `list`,
+`scroll-view`, `dialog`, and `sheet`. It includes common event and prop types,
+utility hooks, and the reactive value helpers used for main-thread state.
 
 ## Installation
 
@@ -15,11 +18,36 @@ pnpm add @lynx-js/lynx-ui-common
 ## Usage
 
 ```tsx
-import { useReactiveValue, updateReactiveValue } from '@lynx-js/lynx-ui-common'
+import { runOnMainThread } from '@lynx-js/react'
+import {
+  useReactiveValue,
+  useReactiveValueChange,
+  updateReactiveValue,
+} from '@lynx-js/lynx-ui-common'
 
-const counter = useReactiveValue('counter', 0)
-updateReactiveValue('counter', value => value + 1)
+export function ReactiveCounter() {
+  const counterRef = useReactiveValue(0, { label: 'counter' })
+
+  useReactiveValueChange(counterRef, (value) => {
+    console.info('counter changed', value)
+  })
+
+  const increment = runOnMainThread(() => {
+    'main thread'
+    if (!counterRef.current) return
+    updateReactiveValue(counterRef, counterRef.current.value + 1)
+  })
+
+  return (
+    <view bindtap={increment}>
+      <text>Increment counter</text>
+    </view>
+  )
+}
 ```
+
+Call `updateReactiveValue` from a main-thread function. The hook returns a
+main-thread ref rather than a plain JS value.
 
 ## Public exports
 

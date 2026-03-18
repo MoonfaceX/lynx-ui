@@ -1,10 +1,14 @@
 # @lynx-js/lynx-ui-presence
 
-`@lynx-js/lynx-ui-presence` provides the **Presence** primitives in lynx-ui.
+`@lynx-js/lynx-ui-presence` provides mount and animation-state helpers in
+lynx-ui.
 
 ## Introduction
 
-Presence and animation-state helpers for mounting transitions and enter/exit orchestration.
+`Presence` drives enter and exit lifecycle for overlay-style components such as
+`dialog` and `popover`. It accepts a single `show` state, can keep nodes
+mounted with `forceMount`, and exposes render-prop status fields like `open`,
+`closed`, `entering`, and `leaving`.
 
 ## Installation
 
@@ -17,10 +21,24 @@ pnpm add @lynx-js/lynx-ui-presence
 ```tsx
 import { Presence } from '@lynx-js/lynx-ui-presence'
 
-export function BasicPresence({ visible, children }) {
-  return <Presence present={visible}>{children}</Presence>
+export function BasicPresence({ show }: { show: boolean }) {
+  return (
+    <Presence show={show}>
+      {({ entering, leaving }) => (
+        <view>
+          <text>
+            {entering ? 'Entering' : leaving ? 'Leaving' : 'Visible'}
+          </text>
+        </view>
+      )}
+    </Presence>
+  )
 }
 ```
+
+Use `forceMount` when hidden content still needs to stay mounted, or
+`useVisibilityFromPresence` when other components need a derived visibility
+signal.
 
 ## Public exports
 

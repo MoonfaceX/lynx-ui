@@ -1,10 +1,12 @@
 # @lynx-js/lynx-ui-button
 
-`@lynx-js/lynx-ui-button` provides the **Button** primitives in lynx-ui.
+`@lynx-js/lynx-ui-button` provides the `Button` component in lynx-ui.
 
 ## Introduction
 
-Headless button primitive for tap/click interactions and disabled state handling.
+`Button` is a headless press primitive. The `Basic` example uses a render prop
+to react to the pressed state, while `Disabled` and `PropagateTapEvent` show
+disabled handling and how button clicks interact with outer tap handlers.
 
 ## Installation
 
@@ -18,9 +20,22 @@ pnpm add @lynx-js/lynx-ui-button
 import { Button } from '@lynx-js/lynx-ui-button'
 
 export function BasicButton() {
-  return <Button onTap={() => {}}>Save</Button>
+  return (
+    <Button onClick={() => console.info('clicked')}>
+      {({ active, disabled }) => (
+        <view>
+          <text>
+            {disabled ? 'Disabled' : active ? 'Pressed' : 'Button'}
+          </text>
+        </view>
+      )}
+    </Button>
+  )
 }
 ```
+
+Pass a plain `ReactNode` when you only need a button, or use the render-prop
+form when the pressed and disabled states should affect your UI.
 
 ## Public exports
 

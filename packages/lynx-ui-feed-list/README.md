@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-feed-list
 
-`@lynx-js/lynx-ui-feed-list` provides the **FeedList** primitives in lynx-ui.
+`@lynx-js/lynx-ui-feed-list` provides the `FeedList` component in lynx-ui.
 
 ## Introduction
 
-List wrapper that combines list virtualization with pull-to-refresh and bounce behavior options.
+`FeedList` builds on top of `List` and adds pull-to-refresh, load-more
+footers, and no-more-data handling. The `Basic` example shows the full flow:
+refreshing, appending more items when the list reaches the bottom, and
+switching to a no-more-data footer.
 
 ## Installation
 
@@ -15,19 +18,48 @@ pnpm add @lynx-js/lynx-ui-feed-list
 ## Usage
 
 ```tsx
+import { useRef, useState } from '@lynx-js/react'
 import { FeedList } from '@lynx-js/lynx-ui-feed-list'
+import type { FeedListRef } from '@lynx-js/lynx-ui-feed-list'
 
-export function BasicFeedList({ children }) {
+const initialItems = [
+  { itemKey: 'A', label: 'A' },
+  { itemKey: 'B', label: 'B' },
+]
+
+export function BasicFeedList() {
+  const feedListRef = useRef<FeedListRef>(null)
+  const [items, setItems] = useState(initialItems)
+
   return (
     <FeedList
-      refreshOptions={{ enableRefresh: true }}
-      bounceableOptions={{ enableBounces: true }}
+      ref={feedListRef}
+      listId='feedListBasic'
+      listType='single'
+      spanCount={1}
+      scrollOrientation='vertical'
+      refreshOptions={{
+        enableRefresh: true,
+        onStartRefresh: () => {
+          setTimeout(() => {
+            setItems([...initialItems].reverse())
+            feedListRef.current?.finishRefresh()
+          }, 1000)
+        },
+      }}
     >
-      {children}
+      {items.map((item) => (
+        <list-item key={item.itemKey} item-key={item.itemKey}>
+          <text>{item.label}</text>
+        </list-item>
+      ))}
     </FeedList>
   )
 }
 ```
+
+Use `loadMoreFooter`, `noMoreDataFooter`, `finishRefresh`, and
+`changeHasMoreStatus` to match the complete flow from the `Basic` example.
 
 ## Public exports
 

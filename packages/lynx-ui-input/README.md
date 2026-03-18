@@ -1,10 +1,14 @@
 # @lynx-js/lynx-ui-input
 
-`@lynx-js/lynx-ui-input` provides the **Input** primitives in lynx-ui.
+`@lynx-js/lynx-ui-input` provides input primitives and keyboard-aware helpers
+in lynx-ui.
 
 ## Introduction
 
-Input primitives including Input, TextArea, and keyboard-aware helpers.
+The `Basic` example covers uncontrolled and controlled `Input`, plus
+multi-line `TextArea`. The keyboard-aware examples show how
+`KeyboardAwareRoot`, `KeyboardAwareResponder`, and `KeyboardAwareTrigger` keep
+focused fields visible in regular layouts and inside `ScrollView`.
 
 ## Installation
 
@@ -15,17 +19,28 @@ pnpm add @lynx-js/lynx-ui-input
 ## Usage
 
 ```tsx
+import { useState } from '@lynx-js/react'
 import { Input, TextArea } from '@lynx-js/lynx-ui-input'
 
 export function BasicInput() {
+  const [value, setValue] = useState('controlledValue')
+
   return (
     <view>
-      <Input placeholder='Title' />
-      <TextArea placeholder='Description' />
+      <Input placeholder='Type here' />
+      <Input
+        value={value}
+        onInput={setValue}
+        placeholder='Controlled'
+      />
+      <TextArea placeholder='Write something...' />
     </view>
   )
 }
 ```
+
+For long forms or scrollers, wrap the layout with `KeyboardAwareRoot` and
+`KeyboardAwareResponder`, then place each field inside `KeyboardAwareTrigger`.
 
 ## Public exports
 

@@ -1,10 +1,13 @@
 # @lynx-js/lynx-ui-draggable
 
-`@lynx-js/lynx-ui-draggable` provides the **Draggable** primitives in lynx-ui.
+`@lynx-js/lynx-ui-draggable` provides the `Draggable` primitives in lynx-ui.
 
 ## Introduction
 
-Drag-and-drop primitives and hook for movable elements with optional draggable boundaries.
+`Draggable` can make an entire node movable, while `DraggableRoot` with
+`DraggableArea` lets you restrict dragging to a handle. The examples also show
+bounded dragging with `minTranslateX`, `maxTranslateX`, `minTranslateY`, and
+`maxTranslateY`.
 
 ## Installation
 
@@ -15,22 +18,21 @@ pnpm add @lynx-js/lynx-ui-draggable
 ## Usage
 
 ```tsx
-import {
-  DraggableRoot,
-  DraggableArea,
-  Draggable,
-} from '@lynx-js/lynx-ui-draggable'
+import { DraggableArea, DraggableRoot } from '@lynx-js/lynx-ui-draggable'
 
 export function BasicDraggable() {
   return (
-    <DraggableRoot>
+    <DraggableRoot resetOnEnd={true} trigger='immediate'>
       <DraggableArea>
-        <Draggable>Drag me</Draggable>
+        <text>Drag here</text>
       </DraggableArea>
     </DraggableRoot>
   )
 }
 ```
+
+Use `Draggable` directly when the whole node is draggable. Add translation
+limits when you need the bounded behavior from the `WithBounds` example.
 
 ## Public exports
 

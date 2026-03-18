@@ -1,10 +1,12 @@
 # @lynx-js/lynx-ui-switch
 
-`@lynx-js/lynx-ui-switch` provides the **Switch** primitives in lynx-ui.
+`@lynx-js/lynx-ui-switch` provides the `Switch` primitives in lynx-ui.
 
 ## Introduction
 
-Headless switch primitives with track/thumb composition and render props.
+`Switch` is composed from `Switch`, `SwitchTrack`, and `SwitchThumb`. The
+examples cover uncontrolled and controlled state, disabled behavior, and
+different visual themes built on top of the same headless structure.
 
 ## Installation
 
@@ -15,18 +17,23 @@ pnpm add @lynx-js/lynx-ui-switch
 ## Usage
 
 ```tsx
-import { Switch, SwitchTrack, SwitchThumb } from '@lynx-js/lynx-ui-switch'
+import { useState } from '@lynx-js/react'
+import { Switch, SwitchThumb, SwitchTrack } from '@lynx-js/lynx-ui-switch'
 
 export function BasicSwitch() {
+  const [checked, setChecked] = useState(true)
+
   return (
-    <Switch checked={true} onCheckedChange={() => {}}>
-      <SwitchTrack>
-        <SwitchThumb />
-      </SwitchTrack>
+    <Switch checked={checked} onChange={setChecked}>
+      <SwitchTrack />
+      <SwitchThumb />
     </Switch>
   )
 }
 ```
+
+Set `defaultChecked` for uncontrolled usage, or pass `disabled` to prevent
+interaction while keeping the current visual state.
 
 ## Public exports
 
