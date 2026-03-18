@@ -78,13 +78,17 @@ function copyDir(src, dest) {
   }
 }
 
-// Read version from the main lynx-ui package
-const version = JSON.parse(
+// Version = lynx-ui base version + short commit hash to allow independent releases.
+// e.g. 0.1.0-abc1234f — every push to main gets a unique version.
+const baseVersion = JSON.parse(
   fs.readFileSync(
     path.join(repoRoot, 'packages/lynx-ui/package.json'),
     'utf8',
   ),
 ).version
+const commitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf8' })
+  .trim()
+const version = `${baseVersion}-${commitHash}`
 
 const componentDirs = fs.readdirSync(examplesRoot).filter((name) => {
   const p = path.join(examplesRoot, name)
