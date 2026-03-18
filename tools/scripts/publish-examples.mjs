@@ -21,8 +21,8 @@
  *   pnpm examples:build   (builds all examples, producing dist/*.bundle files)
  *
  * Usage:
- *   node tools/scripts/publish-examples.mjs [--dry-run] [--tag <tag>]
- *   pnpm examples:publish [-- --dry-run]
+ *   node tools/scripts/publish-examples.mjs [--dry-run] [--tag <tag>] [--filter <Component> ...]
+ *   pnpm examples:publish [-- --dry-run] [-- --filter Button --filter Form]
  */
 
 import { execSync } from 'node:child_process'
@@ -78,19 +78,22 @@ function copyDir(src, dest) {
   }
 }
 
-// Version = lynx-ui base version + short commit hash to allow independent releases.
-// e.g. 0.1.0-abc1234f — every push to main gets a unique version.
-const baseVersion = JSON.parse(
-  fs.readFileSync(
-    path.join(repoRoot, 'packages/lynx-ui/package.json'),
-    'utf8',
-  ),
-).version
+// Version = 0.0.0-<short-commit-hash>.
+// Every push to main gets a unique, commit-addressable version.
 const commitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf8' })
   .trim()
-const version = `${baseVersion}-${commitHash}`
+const version = `0.0.0-${commitHash}`
+
+// When --filter is passed, only publish the listed components.
+// e.g. --filter Button --filter Form
+const filterIdx = process.argv.reduce((acc, arg, i) => {
+  if (arg === '--filter' && process.argv[i + 1]) acc.push(process.argv[i + 1])
+  return acc
+}, [])
+const filterSet = filterIdx.length > 0 ? new Set(filterIdx) : null
 
 const componentDirs = fs.readdirSync(examplesRoot).filter((name) => {
+  if (filterSet && !filterSet.has(name)) return false
   const p = path.join(examplesRoot, name)
   return (
     fs.statSync(p).isDirectory()
