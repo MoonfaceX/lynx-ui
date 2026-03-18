@@ -1,0 +1,54 @@
+name: Publish Examples
+
+on:
+  push:
+    branches: [
+      "main",
+    ]
+
+# Set default minimum permissions to prevent unnecessary access
+permissions: {}
+
+env:
+  CI: 1
+  TURBO_TELEMETRY_DISABLED: 1
+  NPM_CONFIG_PROVENANCE: true
+
+jobs:
+  publish-examples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.repository == 'lynx-family/lynx-ui'
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
+    environment: npm
+    permissions:
+      contents: read
+      # `id-token: write` is required for npm provenance
+      # See: https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
+      id-token: write
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+      - name: Install
+        run: |
+          git submodule update --init --recursive --remote
+          npm install -g corepack@latest
+          corepack enable && corepack prepare
+          corepack pnpm install --frozen-lockfile
+      - name: Build Examples
+        run: |
+          corepack pnpm examples:build
+      - name: Publish Examples
+        run: |
+          corepack pnpm examples:publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
