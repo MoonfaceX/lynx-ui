@@ -48,6 +48,7 @@ export default tseslint.config(
       'packages/**/vitest.config.ts',
       'website/**',
       'tools/configs/**',
+      'tools/typings/**/*.d.ts',
       '**/tools/make-new-component/examplesTemplate/**',
       '**/tools/make-new-component/template/**',
 
@@ -57,6 +58,16 @@ export default tseslint.config(
   },
   js.configs.recommended,
   cspellESLintPluginRecommended,
+  {
+    rules: {
+      '@cspell/spellchecker': [
+        'warn',
+        {
+          configFile: path.resolve(import.meta.dirname, 'cspell.jsonc'),
+        },
+      ],
+    },
+  },
   ...jsoncPlugin.configs['flat/recommended-with-jsonc'],
   regexpPlugin.configs['flat/recommended'],
   // // Rules from eslint-plugin-jsdoc
@@ -267,7 +278,10 @@ export default tseslint.config(
         sourceType: 'module',
         projectService: {
           allowDefaultProject: ['*.js'],
-          defaultProject: path.resolve(import.meta.dirname, 'tsconfig.json'),
+          defaultProject: path.resolve(
+            import.meta.dirname,
+            'tsconfig.eslint.json',
+          ),
         },
       },
     },
