@@ -40,16 +40,22 @@ jobs:
           package-manager-cache: false
       - name: Install
         run: |
-          git submodule update --init --recursive --remote
-          npm install -g corepack@latest
-          corepack enable && corepack prepare
-          corepack pnpm install --frozen-lockfile
+          git submodule update --init --recursive
+          corepack enable
+          pnpm install --frozen-lockfile
       - name: Detect changed examples
         id: changed
         run: |
+          BASE_SHA="${{ github.event.before }}"
+          if [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            RANGE_FILTER="./apps/examples/*"
+          else
+            RANGE_FILTER="./apps/examples/*...[$BASE_SHA]"
+          fi
+
           # Use turbo's dependency-aware filter to find example packages
-          # affected by changes since the previous commit (including transitive deps).
-          CHANGED=$(corepack pnpm turbo build --filter='./apps/examples/*...[HEAD^]' --dry-run=json \
+          # affected by changes since the previous commit range (including transitive deps).
+          CHANGED=$(pnpm turbo build --filter="$RANGE_FILTER" --dry-run=json \
             | node -e "
               const data = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
               const names = (data.tasks || [])
@@ -59,6 +65,7 @@ jobs:
               console.log(names.join(','));
             ")
           echo "examples=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "range_filter=$RANGE_FILTER" >> "$GITHUB_OUTPUT"
           if [ -z "$CHANGED" ]; then
             echo "No examples changed — skipping publish."
           else
@@ -67,7 +74,7 @@ jobs:
       - name: Build changed examples
         if: steps.changed.outputs.examples != ''
         run: |
-          corepack pnpm turbo build --filter='./apps/examples/*...[HEAD^]'
+          pnpm turbo build --filter="${{ steps.changed.outputs.range_filter }}"
       - name: Publish changed examples
         if: steps.changed.outputs.examples != ''
         run: |
@@ -77,6 +84,6 @@ jobs:
           for comp in "${COMPONENTS[@]}"; do
             FILTER_ARGS="$FILTER_ARGS --filter $comp"
           done
-          corepack pnpm examples:publish $FILTER_ARGS
+          pnpm examples:publish $FILTER_ARGS
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_LYNX_EXAMPLES }}
