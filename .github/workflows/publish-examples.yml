@@ -78,6 +78,14 @@ jobs:
       - name: Publish changed examples
         if: steps.changed.outputs.examples != ''
         run: |
+          PUBLISH_ENABLED="${{ vars.PUBLISH_EXAMPLES_ENABLED }}"
+          if [ "$PUBLISH_ENABLED" != "true" ] && [ "$PUBLISH_ENABLED" != "1" ]; then
+            echo "Publish disabled (vars.PUBLISH_EXAMPLES_ENABLED=$PUBLISH_ENABLED) — skipping."
+            echo "Changed examples (detected): ${{ steps.changed.outputs.examples }}"
+            echo "Range filter: ${{ steps.changed.outputs.range_filter }}"
+            exit 0
+          fi
+
           # Convert comma-separated list to --filter flags
           FILTER_ARGS=""
           IFS=',' read -ra COMPONENTS <<< "${{ steps.changed.outputs.examples }}"
