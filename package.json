@@ -32,7 +32,12 @@
     "spell": "cspell lint --config cspell.jsonc --gitignore --no-progress --no-must-find-files --show-suggestions **",
     "test": "vitest",
     "update:submodules": "git submodule update --init --recursive",
-    "update:submodules-remote": "git submodule update --init --recursive --remote"
+    "update:submodules-remote": "git submodule update --init --recursive --remote",
+    "genDoc": "pnpm run analyzeDoc && pnpm tsx website/prepackScript.ts",
+    "website": "pnpm --filter '@lynx-js/lynx-ui-doc' dev",
+    "oss-doc:all": "pnpm run oss-doc:build && pnpm run oss-doc:pack",
+    "oss-doc:build": "pnpm --filter '@lynx-js/lynx-ui-doc-pack' build",
+    "oss-doc:pack": "pnpm --filter '@lynx-js/lynx-ui-doc-pack' pack-internal"
   },
   "nano-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs,md,json,jsonc}": [

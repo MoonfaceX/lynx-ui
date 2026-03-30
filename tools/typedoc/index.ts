@@ -28,12 +28,6 @@ const excludedPath = [
 
 const primitivesConfig: Record<string, string[]> = {
   'lynx-ui-button': ['Button'],
-  'lynx-ui-primitives-sheet': [
-    'SheetRoot',
-    'SheetBackdrop',
-    'SheetView',
-    'SheetContent',
-  ],
   'lynx-ui-dialog': [
     'DialogRoot',
     'DialogBackdrop',
@@ -46,18 +40,6 @@ const primitivesConfig: Record<string, string[]> = {
     'PopoverPositioner',
     'PopoverContent',
     'PopoverArrow',
-  ],
-  'lynx-ui-toast': [
-    'ToastRoot',
-    'ToastPositioner',
-    'ToastContent',
-  ],
-  'lynx-ui-primitives-tooltip': [
-    'TooltipRoot',
-    'TooltipTrigger',
-    'TooltipPositioner',
-    'TooltipContent',
-    'TooltipArrow',
   ],
   'lynx-ui-radio-group': [
     'RadioGroupRoot',

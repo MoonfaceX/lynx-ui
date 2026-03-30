@@ -1,0 +1,126 @@
+@use "./hero-text";
+@use "./home-layout-var";
+@use "./news-btn";
+
+.sectionDivider {
+  border-top-width: 1px;
+  border-color: var(--home-section-divider);
+}
+
+.featureBlock {
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+  border-width: 1px;
+  border-color: var(--home-section-divider);
+  align-items: center;
+}
+
+.featureBlockSpan {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+}
+
+.featureBlockRow {
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  border-width: 1px;
+  border-color: var(--home-section-divider);
+  margin-top: -1px;
+  padding: 3vw;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+}
+
+.featureBlockFont {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+
+  @media (max-width: 800px) {
+    font-size: 1.5rem;
+  }
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  background-image: url("../docs/public/assets/halfDotsBackgroundLight.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(180deg);
+  background-position-y: -100%;
+  height: 100%;
+  width: 100%;
+  background-position: bottom;
+  background-position: center -30%;
+  pointer-events: none;
+}
+
+.featureTitle {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+
+  @media (max-width: 800px) {
+    font-size: 1.5rem;
+  }
+}
+
+.featureDescription {
+  font-size: 1rem;
+  text-align: center;
+  opacity: 65%;
+}
+
+.demosWrapper {
+  padding-bottom: 4.8vw;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 1) 5%,
+    rgba(0, 0, 0, 1) 95%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.startBuildingTitle {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  hyphens: auto;
+  max-width: 100%;
+  animation: 0.8s ease-out fade-in;
+  word-wrap: break-word;
+  font-size: 2.5rem;
+  font-weight: bold;
+
+  @media (max-width: 800px) {
+    font-size: 1.5rem;
+  }
+}
+
+.demosList {
+  left: 0;
+  animation: moveRight 100s ease-out forwards infinite;
+}
+
+.home-layout-container > div:first-child {
+  min-height: 75vh !important;
+}
+
+.h-full {
+  height: 100%;
+}

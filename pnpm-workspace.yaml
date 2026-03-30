@@ -1,4 +1,6 @@
 packages:
+  - tools/lynx-ui-doc-pack
+  - website
   - packages/*
   - apps/examples/*
   - luna/packages/*

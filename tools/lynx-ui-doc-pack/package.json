@@ -1,0 +1,9 @@
+{
+  "name": "@lynx-js/lynx-ui-doc-pack",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.cjs",
+    "pack-internal": "pnpm -C dist pack --pack-destination .."
+  }
+}
