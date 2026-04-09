@@ -228,6 +228,7 @@ build_*
 doc_build
 
 tools/typedoc/*.js
+**/docs/APIReference*.mdx
 
 **/example-metadata.json
 

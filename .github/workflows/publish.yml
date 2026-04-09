@@ -92,6 +92,9 @@ jobs:
       - name: build
         run: |
           corepack pnpm turbo build --summarize
+      - name: Generate API docs
+        run: |
+          corepack pnpm analyzeDoc
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date -u +'%Y-%m-%d %H:%M:%S')"
