@@ -241,6 +241,25 @@ export type {
   SwitchRenderProps,
 } from '@lynx-js/lynx-ui-switch'
 
+// slider
+export {
+  Slider,
+  SliderRoot,
+  SliderTrack,
+  SliderRange,
+  SliderThumb,
+} from '@lynx-js/lynx-ui-slider'
+export type {
+  SliderProgressChangeSource,
+  SliderProps,
+  SliderRangeProps,
+  SliderRef,
+  SliderRootProps,
+  SliderThumbProps,
+  SliderTrackProps,
+  SliderUpdateProgressOptions,
+} from '@lynx-js/lynx-ui-slider'
+
 export {
   SheetRoot,
   SheetContent,
