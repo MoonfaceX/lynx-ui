@@ -13,6 +13,7 @@ import {
 } from '@lynx-js/react'
 import type { ForwardedRef } from '@lynx-js/react'
 
+import { getRectByRef } from '@lynx-js/lynx-ui-common'
 import type { NodesRef } from '@lynx-js/types'
 
 import { SliderContext } from '../context'
@@ -147,25 +148,19 @@ function SliderRootImpl(props: SliderRootProps, ref: ForwardedRef<SliderRef>) {
   const measureBounds = (): void => {
     if (isMeasuringBounds.current) return
 
-    const trackNode = trackRef.current
-    if (!trackNode?.invoke) return
+    if (!trackRef.current) return
 
     isMeasuringBounds.current = true
 
-    trackNode
-      .invoke({
-        method: 'boundingClientRect',
-        params: { relativeTo: 'screen' },
-        success: (res: unknown) => {
-          isMeasuringBounds.current = false
-          updateBounds(res)
-          flushPendingMoveX()
-        },
-        fail: () => {
-          isMeasuringBounds.current = false
-        },
+    getRectByRef(trackRef)
+      .then((res) => {
+        isMeasuringBounds.current = false
+        updateBounds(res)
+        flushPendingMoveX()
       })
-      ?.exec?.()
+      .catch(() => {
+        isMeasuringBounds.current = false
+      })
   }
 
   const setDragging = (nextDragging: boolean, value: number): void => {

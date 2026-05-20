@@ -121,7 +121,13 @@ export const getRectByRef = (
   new Promise((resolve, reject) => {
     invokeByRef(ref, 'boundingClientRect', {
       relativeTo: relativeToScreen ? 'screen' : relativeTo,
+      // Match the standard getBoundingClientRect behavior: transforms are
+      // included in the returned rect. Keep this enabled by default across
+      // platforms to avoid incorrect bounds for transformed nodes, such as
+      // scaled views. A few animation-related cases may opt out explicitly.
       androidEnableTransformProps: true,
+      iosEnableTransformProps: true,
+      harmonyEnableTransformProps: true,
     })
       .then((res) => {
         resolve(
@@ -152,7 +158,13 @@ export const getRootRect = (
         method: 'boundingClientRect',
         params: {
           relativeTo: relativeToScreen ? 'screen' : relativeTo,
+          // Match the standard getBoundingClientRect behavior: transforms are
+          // included in the returned rect. Keep this enabled by default across
+          // platforms to avoid incorrect bounds for transformed nodes, such as
+          // scaled views. A few animation-related cases may opt out explicitly.
           androidEnableTransformProps: true,
+          iosEnableTransformProps: true,
+          harmonyEnableTransformProps: true,
         },
         success: (res) => {
           resolve(
@@ -181,7 +193,13 @@ export const getRectById = (
   new Promise((resolve, reject) => {
     invokeById(id, 'boundingClientRect', {
       relativeTo: relativeToScreen ? 'screen' : relativeTo,
+      // Match the standard getBoundingClientRect behavior: transforms are
+      // included in the returned rect. Keep this enabled by default across
+      // platforms to avoid incorrect bounds for transformed nodes, such as
+      // scaled views. A few animation-related cases may opt out explicitly.
       androidEnableTransformProps: true,
+      iosEnableTransformProps: true,
+      harmonyEnableTransformProps: true,
     })
       .then((res) => {
         resolve(
