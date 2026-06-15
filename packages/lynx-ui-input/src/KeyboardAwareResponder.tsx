@@ -29,16 +29,28 @@ export function KeyboardAwareResponderImpl(props: KeyboardAwareResponderProps) {
     ...rest
   } = props
   const { width = '100%', height = '100%', ...restStyle } = style ?? {}
-  const { keyboardAwareResponder, keyboardAwareResponderScrollInfoCollected } =
-    useContext(KeyboardAwareRootContext)
+  const {
+    keyboardAwareResponder,
+    keyboardAwareResponderScrollInfoCollected,
+  } = useContext(KeyboardAwareRootContext)
 
   const dummyRefAtKeyboardHeight = useRef<NodesRef>(null)
-  useEffect(() => {
+  const scrollContentId =
+    `keyboard-aware-trigger-scroll-content-${scrollviewId}`
+
+  const collectKeyboardAwareResponderScrollInfo = () =>
     keyboardAwareResponderScrollInfoCollected?.(
       scrollviewId,
-      `keyboard-aware-trigger-scroll-content-${scrollviewId}`,
+      scrollContentId,
       dummyRefAtKeyboardHeight,
     )
+
+  const handleResponderLayoutChange = () => {
+    collectKeyboardAwareResponderScrollInfo()
+  }
+
+  useEffect(() => {
+    collectKeyboardAwareResponderScrollInfo()
   }, [dummyRefAtKeyboardHeight, keyboardAwareResponder])
 
   return (
@@ -48,6 +60,7 @@ export function KeyboardAwareResponderImpl(props: KeyboardAwareResponderProps) {
       {...rest}
       ref={keyboardAwareResponder}
       flatten={false}
+      bindlayoutchange={handleResponderLayoutChange}
     >
       {as === 'ScrollView'
         ? (
@@ -59,7 +72,7 @@ export function KeyboardAwareResponderImpl(props: KeyboardAwareResponderProps) {
             scrollOrientation='vertical'
           >
             <view
-              id={`keyboard-aware-trigger-scroll-content-${scrollviewId}`}
+              id={scrollContentId}
               style={{
                 width: '100%',
                 display: 'linear',

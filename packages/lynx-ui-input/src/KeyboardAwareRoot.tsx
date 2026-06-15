@@ -168,7 +168,7 @@ export function KeyboardAwareRootImpl(props: KeyboardAwareRootProps) {
     offset: number,
     smooth: boolean,
   ) => {
-    getRectByRef(focusedRef, false, scrollContentId).then(
+    getRectByRef(focusedRef, true, scrollContentId).then(
       (focusedRect) => {
         getRectByRef(keyboardAwareResponderRef, true).then(
           (responderRect) => {
