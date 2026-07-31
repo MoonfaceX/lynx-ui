@@ -95,6 +95,8 @@ function InputOTPImpl(
     fieldLength,
     inputType,
   )
+  // Avoid redundant async setValue commands that can finish out of order.
+  const nativeValueRef = useRef(displayedValue)
 
   const invokeInput = useMemoizedFn(
     (
@@ -134,9 +136,14 @@ function InputOTPImpl(
 
   const blur = useMemoizedFn(() => invokeInput('blur'))
 
-  const syncNativeValue = useMemoizedFn(
-    (nextValue: string) => invokeInput('setValue', nextValue),
-  )
+  const syncNativeValue = useMemoizedFn((nextValue: string) => {
+    if (nativeValueRef.current === nextValue) {
+      return Promise.resolve()
+    }
+
+    nativeValueRef.current = nextValue
+    return invokeInput('setValue', nextValue)
+  })
 
   const emitValue = useMemoizedFn(
     (nextValue: string, previousValue: string) => {
@@ -168,7 +175,7 @@ function InputOTPImpl(
 
     emitValue(nextValue, displayedValue)
 
-    return syncNativeValue(isControlled ? displayedValue : nextValue)
+    return syncNativeValue(nextValue)
   })
 
   useImperativeHandle(
@@ -200,6 +207,10 @@ function InputOTPImpl(
   }, [fieldLength, inputType, isControlled, uncontrolledValue])
 
   useEffect(() => {
+    if (nativeValueRef.current === displayedValue) {
+      return
+    }
+
     void syncNativeValue(displayedValue).catch(reportInputError)
   }, [displayedValue, syncNativeValue])
 
@@ -213,6 +224,7 @@ function InputOTPImpl(
     (event: BaseEvent<'bindinput', InputInputEvent>) => {
       const rawValue = event.detail.value
       const nextValue = normalizeOTPValue(rawValue, fieldLength, inputType)
+      nativeValueRef.current = rawValue
 
       if (!isControlled) {
         setUncontrolledValue(nextValue)
@@ -220,9 +232,8 @@ function InputOTPImpl(
 
       emitValue(nextValue, displayedValue)
 
-      const nativeValue = isControlled ? displayedValue : nextValue
-      if (rawValue !== nativeValue) {
-        void syncNativeValue(nativeValue).catch(reportInputError)
+      if (rawValue !== nextValue) {
+        void syncNativeValue(nextValue).catch(reportInputError)
       }
     },
   )
