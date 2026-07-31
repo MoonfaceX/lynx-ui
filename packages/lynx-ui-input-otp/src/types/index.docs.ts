@@ -5,13 +5,12 @@
 import type { ForwardedRef, ReactElement, ReactNode } from '@lynx-js/react'
 
 import type { ComponentBasicProps } from '@lynx-js/lynx-ui-common'
-import type { CSSProperties } from '@lynx-js/types'
 
 /**
- * Number of slots managed by InputOTP.
- * @zh InputOTP 管理的输入槽数量。
+ * Positive number of slots managed by InputOTP.
+ * @zh InputOTP 管理的输入槽数量，必须为正整数。
  */
-export type InputOTPLength = 4 | 6
+export type InputOTPLength = number
 
 /**
  * Character set accepted by InputOTP.
@@ -88,22 +87,22 @@ export interface InputOTPSlotRenderProps {
   char?: string
 
   /**
-   * Whether this is the active slot.
-   * @zh 当前输入槽是否激活。
+   * Whether this is the focused slot that contains the visual caret.
+   * @zh 当前输入槽是否为包含可视光标的聚焦槽。
    */
-  isActive: boolean
+  focused: boolean
 
   /**
    * Whether this slot contains a character.
    * @zh 当前输入槽是否已经包含字符。
    */
-  isFilled: boolean
+  filled: boolean
 
   /**
-   * Whether this slot should display the visual caret.
-   * @zh 当前输入槽是否应展示可视光标。
+   * Whether every slot in the field is filled.
+   * @zh 当前输入框中的所有输入槽是否均已填充。
    */
-  hasFakeCaret: boolean
+  complete: boolean
 
   /**
    * Whether input is disabled.
@@ -119,10 +118,10 @@ export interface InputOTPSlotRenderProps {
 }
 
 /**
- * UI variants injected by InputOTP and InputOTPSlot for state-based styling.
- * @zh InputOTP 和 InputOTPSlot 注入的状态类，可用于按状态定制样式。
+ * UI variants injected by InputOTP for state-based styling.
+ * @zh InputOTP 注入的 UI variants，可用于按状态定制样式。
  */
-export interface InputOTPUiVariants {
+export interface InputOTPUIVariants {
   /**
    * Applied to the root while the hidden input is focused.
    * @zh 隐藏输入框聚焦时应用于根节点。
@@ -136,16 +135,28 @@ export interface InputOTPUiVariants {
   'ui-complete'?: boolean
 
   /**
-   * Applied to the root and slots while input is disabled.
-   * @zh 禁用输入时应用于根节点和输入槽。
+   * Applied to the root while input is disabled.
+   * @zh 禁用输入时应用于根节点。
    */
   'ui-disabled'?: boolean
 
   /**
-   * Applied to the root and slots while the value is invalid.
-   * @zh 输入值无效时应用于根节点和输入槽。
+   * Applied to the root while the value is invalid.
+   * @zh 输入值无效时应用于根节点。
    */
   'ui-invalid'?: boolean
+}
+
+/**
+ * UI variants injected by InputOTPSlot for state-based styling.
+ * @zh InputOTPSlot 注入的 UI variants，可用于按状态定制样式。
+ */
+export interface InputOTPSlotUIVariants {
+  /**
+   * Applied to the slot that contains the visual caret.
+   * @zh 应用于包含可视光标的输入槽。
+   */
+  'ui-focused'?: boolean
 
   /**
    * Applied to slots that contain a character.
@@ -154,10 +165,22 @@ export interface InputOTPUiVariants {
   'ui-filled'?: boolean
 
   /**
-   * Applied to the slot that contains the visual caret.
-   * @zh 应用于包含可视光标的输入槽。
+   * Applied to every slot when the field is complete.
+   * @zh 输入完成时应用于每个输入槽。
    */
-  'ui-active'?: boolean
+  'ui-complete'?: boolean
+
+  /**
+   * Applied to the slot while input is disabled.
+   * @zh 禁用输入时应用于输入槽。
+   */
+  'ui-disabled'?: boolean
+
+  /**
+   * Applied to the slot while the value is invalid.
+   * @zh 输入值无效时应用于输入槽。
+   */
+  'ui-invalid'?: boolean
 }
 
 /**
@@ -223,9 +246,9 @@ export interface InputOTPProps extends ComponentBasicProps {
   ref?: ForwardedRef<InputOTPRef>
 
   /**
-   * Number of OTP or PIN characters.
+   * Positive number of OTP or PIN characters. Invalid values fall back to 6.
    * @defaultValue 6
-   * @zh OTP 或 PIN 字符数。
+   * @zh OTP 或 PIN 字符数，必须为正整数。无效值会回退为 6。
    * @Android
    * @iOS
    * @Harmony
@@ -281,9 +304,9 @@ export interface InputOTPProps extends ComponentBasicProps {
   disabled?: boolean
 
   /**
-   * Expose the invalid state to render props and ui-invalid classes.
+   * Expose the invalid state to render props and the ui-invalid variant.
    * @defaultValue false
-   * @zh 通过渲染属性和 ui-invalid 类暴露无效状态。
+   * @zh 通过渲染属性和 ui-invalid variant 暴露无效状态。
    * @Android
    * @iOS
    * @Harmony
@@ -354,62 +377,6 @@ export interface InputOTPSlotProps extends ComponentBasicProps {
    * @Harmony
    */
   index: number
-
-  /**
-   * Style applied while the slot contains the visual caret.
-   * It overrides matching declarations in style.
-   * @zh 输入槽包含可视光标时应用的样式；同名声明会覆盖 style。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  activeStyle?: CSSProperties
-
-  /**
-   * Style applied while InputOTP is invalid. It overrides matching
-   * declarations in style and activeStyle.
-   * @zh InputOTP 无效时应用的样式；同名声明会覆盖 style 和 activeStyle。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  invalidStyle?: CSSProperties
-
-  /**
-   * Class name added to the default rendered character.
-   * @zh 添加到默认渲染字符的类名。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  digitClassName?: string
-
-  /**
-   * Style applied to the default rendered character.
-   * @zh 应用于默认渲染字符的样式。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  digitStyle?: CSSProperties
-
-  /**
-   * Class name added to the default visual caret.
-   * @zh 添加到默认可视光标的类名。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  caretClassName?: string
-
-  /**
-   * Style applied to the default visual caret.
-   * @zh 应用于默认可视光标的样式。
-   * @Android
-   * @iOS
-   * @Harmony
-   */
-  caretStyle?: CSSProperties
 
   /**
    * Custom slot content. A render function receives the slot state.

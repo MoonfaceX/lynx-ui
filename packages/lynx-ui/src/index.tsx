@@ -163,7 +163,8 @@ export type {
   InputOTPRenderProps,
   InputOTPSlotProps,
   InputOTPSlotRenderProps,
-  InputOTPUiVariants,
+  InputOTPSlotUIVariants,
+  InputOTPUIVariants,
 } from '@lynx-js/lynx-ui-input-otp'
 
 // lazy-component

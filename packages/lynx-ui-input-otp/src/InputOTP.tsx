@@ -5,6 +5,7 @@
 import {
   forwardRef,
   memo,
+  useContext,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -14,6 +15,7 @@ import {
 import type { ForwardedRef } from '@lynx-js/react'
 
 import { InvokeRejectError, useMemoizedFn } from '@lynx-js/lynx-ui-common'
+import { KeyboardAwareTriggerContext } from '@lynx-js/lynx-ui-input'
 import type {
   BaseEvent,
   CSSProperties,
@@ -89,14 +91,15 @@ function InputOTPImpl(
   )
   const [focused, setFocused] = useState(false)
   const inputRef = useRef<NodesRef>(null)
+  const { onInputBlurred, onInputFocused } = useContext(
+    KeyboardAwareTriggerContext,
+  )
 
   const displayedValue = normalizeOTPValue(
     isControlled ? value : uncontrolledValue,
     fieldLength,
     inputType,
   )
-  // Avoid redundant async setValue commands that can finish out of order.
-  const nativeValueRef = useRef(displayedValue)
 
   const invokeInput = useMemoizedFn(
     (
@@ -136,14 +139,9 @@ function InputOTPImpl(
 
   const blur = useMemoizedFn(() => invokeInput('blur'))
 
-  const syncNativeValue = useMemoizedFn((nextValue: string) => {
-    if (nativeValueRef.current === nextValue) {
-      return Promise.resolve()
-    }
-
-    nativeValueRef.current = nextValue
-    return invokeInput('setValue', nextValue)
-  })
+  const syncNativeValue = useMemoizedFn(
+    (nextValue: string) => invokeInput('setValue', nextValue),
+  )
 
   const emitValue = useMemoizedFn(
     (nextValue: string, previousValue: string) => {
@@ -207,10 +205,6 @@ function InputOTPImpl(
   }, [fieldLength, inputType, isControlled, uncontrolledValue])
 
   useEffect(() => {
-    if (nativeValueRef.current === displayedValue) {
-      return
-    }
-
     void syncNativeValue(displayedValue).catch(reportInputError)
   }, [displayedValue, syncNativeValue])
 
@@ -224,7 +218,6 @@ function InputOTPImpl(
     (event: BaseEvent<'bindinput', InputInputEvent>) => {
       const rawValue = event.detail.value
       const nextValue = normalizeOTPValue(rawValue, fieldLength, inputType)
-      nativeValueRef.current = rawValue
 
       if (!isControlled) {
         setUncontrolledValue(nextValue)
@@ -241,6 +234,7 @@ function InputOTPImpl(
   const handleFocus = useMemoizedFn(
     (_event: BaseEvent<'bindfocus', InputFocusEvent>) => {
       setFocused(true)
+      onInputFocused?.()
       onFocus?.()
     },
   )
@@ -248,6 +242,7 @@ function InputOTPImpl(
   const handleBlur = useMemoizedFn(
     (_event: BaseEvent<'bindblur', InputBlurEvent>) => {
       setFocused(false)
+      onInputBlurred?.()
       onBlur?.()
     },
   )
@@ -300,7 +295,6 @@ function InputOTPImpl(
           bindfocus={handleFocus}
           bindinput={handleInput}
           confirm-type='done'
-          default-value={displayedValue}
           disabled={disabled}
           ignore-focus={true}
           input-filter={nativeInputFilters[inputType]}

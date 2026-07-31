@@ -55,6 +55,7 @@ n'BDX
 nokey
 noprint
 npmjs
+otpui
 overscroll
 pressable
 Promisable

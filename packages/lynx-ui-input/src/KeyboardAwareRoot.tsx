@@ -6,6 +6,7 @@ import { memo, useEffect, useMemo, useRef, useState } from '@lynx-js/react'
 import type { RefObject } from '@lynx-js/react'
 
 import {
+  getRectById,
   getRectByRef,
   invokeById,
   setNativePropsByRef,
@@ -14,6 +15,7 @@ import {
 import type { NodesRef } from '@lynx-js/types'
 
 import { KeyboardAwareRootContext } from './KeyboardAwareContext'
+import { calculateKeyboardAwareScrollOffset } from './keyboardAwareUtils'
 import type {
   KeyboardAwareRootProps,
   KeyboardAwareRoot as KeyboardAwareRootType,
@@ -168,24 +170,27 @@ export function KeyboardAwareRootImpl(props: KeyboardAwareRootProps) {
     offset: number,
     smooth: boolean,
   ) => {
-    getRectByRef(focusedRef, true, scrollContentId).then(
-      (focusedRect) => {
-        getRectByRef(keyboardAwareResponderRef, true).then(
-          (responderRect) => {
-            invokeById(scrollviewId, 'scrollTo', {
-              index: 0,
-              offset: keyboardHeightInPx
-                + focusedRect.bottom
-                - responderRect.height
-                - focusedRefOffset.current + offset,
-              smooth: smooth,
-            }).catch(() => {
-              // do nothing
-            })
-          },
-        )
-      },
-    )
+    Promise.all([
+      getRectByRef(focusedRef, true),
+      getRectByRef(keyboardAwareResponderRef, true),
+      getRectById(scrollContentId, true),
+    ]).then(([focusedRect, responderRect, scrollContentRect]) => {
+      invokeById(scrollviewId, 'scrollTo', {
+        index: 0,
+        offset: calculateKeyboardAwareScrollOffset({
+          responderTop: responderRect.top,
+          responderBottom: responderRect.bottom,
+          scrollContentTop: scrollContentRect.top,
+          focusedBottom: focusedRect.bottom,
+          keyboardHeight: keyboardHeightInPx,
+          focusedOffset: focusedRefOffset.current,
+          screenOffset: offset,
+        }),
+        smooth: smooth,
+      }).catch(() => {
+        // do nothing
+      })
+    })
   }
 
   const doAdjustThePositionOfViewInKeyboardResponder = (

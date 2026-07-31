@@ -26,7 +26,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "build:watch": "rslib build --watch"
+    "build:watch": "rslib build --watch",
+    "test": "vitest"
   },
   "dependencies": {
     "@lynx-js/lynx-ui-common": "workspace:*",

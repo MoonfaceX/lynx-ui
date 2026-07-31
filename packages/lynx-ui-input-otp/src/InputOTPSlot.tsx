@@ -20,12 +20,6 @@ function InputOTPSlotImpl(props: InputOTPSlotProps) {
     index,
     className,
     style,
-    activeStyle,
-    invalidStyle,
-    digitClassName,
-    digitStyle,
-    caretClassName,
-    caretStyle,
     children,
   } = props
   const context = useInputOTPContext()
@@ -34,6 +28,7 @@ function InputOTPSlotImpl(props: InputOTPSlotProps) {
     value,
     length,
     focused,
+    complete,
     disabled,
     invalid,
   } = context
@@ -46,9 +41,9 @@ function InputOTPSlotImpl(props: InputOTPSlotProps) {
   const slotState: InputOTPSlotRenderProps = {
     index,
     char,
-    isActive: hasFakeCaret,
-    isFilled,
-    hasFakeCaret,
+    focused: hasFakeCaret,
+    filled: isFilled,
+    complete,
     disabled,
     invalid,
   }
@@ -59,29 +54,22 @@ function InputOTPSlotImpl(props: InputOTPSlotProps) {
   return (
     <view
       className={clsx(className, {
+        'ui-focused': hasFakeCaret,
         'ui-filled': isFilled,
-        'ui-active': hasFakeCaret,
+        'ui-complete': complete,
         'ui-disabled': disabled,
         'ui-invalid': invalid,
       })}
-      style={{
-        ...style,
-        ...(hasFakeCaret ? activeStyle : undefined),
-        ...(invalid ? invalidStyle : undefined),
-      }}
+      style={style}
     >
       {children === undefined
         ? (
           <>
             {char === undefined
               ? null
-              : (
-                <text className={digitClassName} style={digitStyle}>
-                  {char}
-                </text>
-              )}
+              : <text>{char}</text>}
             {hasFakeCaret
-              ? <view className={caretClassName} style={caretStyle} />
+              ? <view />
               : null}
           </>
         )

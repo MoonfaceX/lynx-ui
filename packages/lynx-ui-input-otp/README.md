@@ -1,8 +1,12 @@
 # @lynx-js/lynx-ui-input-otp
 
-A headless four- or six-character OTP and PIN input for ReactLynx. InputOTP
-owns keyboard, focus, deletion, paste, filtering, and value state through one
-hidden native input. Consumers compose the visible field with InputOTPSlot.
+A headless, configurable-length OTP and PIN input for ReactLynx. InputOTP owns
+keyboard, focus, deletion, paste, filtering, and value state through one hidden
+native input. Consumers compose the visible field with InputOTPSlot.
+
+## Requirements
+
+- **Lynx SDK**: >= 4.0
 
 ## Installation
 
@@ -16,7 +20,7 @@ The standalone package is also available as
 ## Component structure
 
 ```tsx
-<InputOTP>
+<InputOTP length={4}>
   <InputOTPSlot index={0} />
   <InputOTPSlot index={1} />
   <InputOTPSlot index={2} />
@@ -26,11 +30,11 @@ The standalone package is also available as
 
 - `InputOTP` owns the normalized controlled or uncontrolled value and the
   hidden native input.
-- `InputOTPSlot` reads one character and its active, filled, disabled, and
-  invalid states from context.
+- `InputOTPSlot` reads one character and its focused, filled, complete,
+  disabled, and invalid states from context.
 
 InputOTP and InputOTPSlot ship without visible styles. Use `className`,
-`style`, slot style props, render props, and the injected `ui-*` state classes
-to compose the presentation.
+`style`, injected `ui-*` variants, and render props to compose the
+presentation.
 
 [View examples](https://github.com/lynx-family/lynx-ui/tree/main/apps/examples/InputOTP)

@@ -1,5 +1,12 @@
 @import "@lynx-js/luna-styles/index.css";
 
+.lunaris-dark,
+.lunaris-light,
+.luna-dark,
+.luna-light {
+  --negative: #ff453a;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -54,7 +61,7 @@
   background-color: var(--neutral-ambient);
 }
 
-.otp-slot.ui-active {
+.otp-slot.ui-focused {
   border-color: var(--primary);
   background-color: var(--paper-clear);
 }
@@ -63,11 +70,11 @@
   opacity: 0.42;
 }
 
-.otp-field.ui-invalid .otp-slot {
-  border-color: #ff453a;
+.otp-slot.ui-invalid {
+  border-color: var(--negative);
 }
 
-.otp-digit {
+.otp-slot > text {
   color: var(--content);
   font-size: 20px;
   font-weight: 600;
@@ -75,7 +82,7 @@
   text-align: center;
 }
 
-.otp-caret {
+.otp-slot.ui-focused > view {
   width: 2px;
   height: 24px;
   border-radius: 1px;

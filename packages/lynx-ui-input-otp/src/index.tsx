@@ -13,5 +13,6 @@ export type {
   InputOTPRenderProps,
   InputOTPSlotProps,
   InputOTPSlotRenderProps,
-  InputOTPUiVariants,
+  InputOTPSlotUIVariants,
+  InputOTPUIVariants,
 } from './types'

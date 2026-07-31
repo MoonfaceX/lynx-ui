@@ -3,4 +3,7 @@
 "@lynx-js/skill-lynx-ui": patch
 ---
 
-Add the headless InputOTP and InputOTPSlot primitives with four- and six-character input, controlled and uncontrolled state, input filtering, completion callbacks, state styling hooks, examples, and skill references.
+Add the headless InputOTP and InputOTPSlot primitives with four- and six-character
+input, controlled and uncontrolled state, input filtering, completion callbacks,
+state styling hooks, examples, and skill references. InputOTP requires Lynx SDK
+4.0 or newer.

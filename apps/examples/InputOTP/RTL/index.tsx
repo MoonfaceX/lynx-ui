@@ -7,12 +7,11 @@ import { root } from '@lynx-js/react'
 
 import { InputOTP, InputOTPSlot } from '@lynx-js/lynx-ui'
 
-import '../styles.css'
 import './index.css'
 
 function App() {
   return (
-    <view className='demo-page rtl-page luna-light'>
+    <view className='demo-page rtl-page lunaris-dark'>
       <view className='demo-card'>
         <text className='rtl-title'>أدخل رمز التحقق</text>
         <text className='rtl-description'>
@@ -27,9 +26,7 @@ function App() {
           {Array.from({ length: 4 }, (_, index) => (
             <InputOTPSlot
               key={index}
-              caretClassName='otp-caret'
               className='otp-slot'
-              digitClassName='otp-digit'
               index={index}
             />
           ))}

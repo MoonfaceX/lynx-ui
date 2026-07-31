@@ -17,7 +17,7 @@ export const nativeInputFilters: Record<InputOTPInputType, string> = {
 }
 
 export function normalizeInputOTPLength(length: number): InputOTPLength {
-  return length === 4 ? 4 : 6
+  return Number.isInteger(length) && length > 0 ? length : 6
 }
 
 export function normalizeOTPValue(

@@ -8,6 +8,7 @@ import { exampleConfig } from '../../../tools/configs/exampleConfig.mjs'
 const defaultConfig = exampleConfig({
   InputOTPBasic: './Basic/index.tsx',
   InputOTPCapabilities: './Capabilities/index.tsx',
+  InputOTPKeyboardAware: './KeyboardAware/index.tsx',
   InputOTPRTL: './RTL/index.tsx',
 })
 

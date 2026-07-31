@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'lynx-ui/luna-known-css-vars': [true, {
       extraTokenFiles: [
+        './apps/examples/InputOTP/shared/base.css',
         './apps/examples/Popover/shared/base.css',
         './apps/examples/Sheet/shared/base.css',
       ],

@@ -226,6 +226,23 @@ function getUiVariantDescriptionsForKeys(
   return buildDescriptionsFromInterface(iface, isZh)
 }
 
+function getDeclaredUiVariantKeys(): Set<string> {
+  const currentPackage = currentTypeDocCandidatesEn[0]
+  const keys = new Set<string>()
+  if (!currentPackage) return keys
+
+  for (const node of getAllInterfaceNodes(currentPackage)) {
+    const nodeName = typeof node?.name === 'string' ? node.name : ''
+    if (!nodeName.toLowerCase().endsWith('uivariants')) continue
+
+    for (const name of getPropertyNamesOfInterface(node)) {
+      if (name.startsWith('ui-')) keys.add(name)
+    }
+  }
+
+  return keys
+}
+
 function isRenderFunctionChildrenProp(prop: unknown): boolean {
   const p = prop as { name?: unknown, type?: unknown } | null
   if (!p || p.name !== 'children') return false
@@ -368,13 +385,21 @@ function extractRenderFunctionTableSource(
 function mergeRenderPropsAndUiVariants(
   renderPropItems: Array<Record<string, unknown>>,
 ): Array<Record<string, unknown>> {
-  const uiKeys = renderPropItems
+  const declaredUiVariantKeys = getDeclaredUiVariantKeys()
+  const variantItems = declaredUiVariantKeys.size > 0
+    ? renderPropItems.filter((item: Record<string, unknown>) => {
+      const className = item?.className
+      return typeof className === 'string'
+        && declaredUiVariantKeys.has(className)
+    })
+    : renderPropItems
+  const uiKeys = variantItems
     .map((item: Record<string, unknown>) => item?.className)
     .filter((c: unknown): c is string => typeof c === 'string')
 
   const uiVariantDescriptionsEn = getUiVariantDescriptionsForKeys(uiKeys, false)
   const uiVariantDescriptionsZh = getUiVariantDescriptionsForKeys(uiKeys, true)
-  return renderPropItems.map((item: Record<string, unknown>) => {
+  return variantItems.map((item: Record<string, unknown>) => {
     const className = item?.className
     const classNameStr = typeof className === 'string' ? className : ''
     const renderPropKey = typeof item?.['Render Prop'] === 'string'
@@ -622,7 +647,7 @@ const doGenTplWithData = async (
   ${
       sortedData.map((item: any) => {
         if (renderPropsTitlesToSkip.has(item.title)) return ''
-        if (!titleOrder.includes(item.title.replace(/Props$/, ''))) {
+        if (!titleOrder.includes(item.title.replace(/(Props|Ref)$/, ''))) {
           return
         }
         if (item.title.includes('Props')) {

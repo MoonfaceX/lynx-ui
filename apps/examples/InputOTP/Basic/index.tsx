@@ -6,7 +6,6 @@ import { root, useState } from '@lynx-js/react'
 
 import { InputOTP, InputOTPSlot } from '@lynx-js/lynx-ui'
 
-import '../styles.css'
 import './index.css'
 
 function App() {
@@ -34,9 +33,7 @@ function App() {
           {Array.from({ length: 6 }, (_, index) => (
             <InputOTPSlot
               key={index}
-              caretClassName='otp-caret'
               className='otp-slot'
-              digitClassName='otp-digit'
               index={index}
             />
           ))}

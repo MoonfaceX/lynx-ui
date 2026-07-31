@@ -1550,6 +1550,9 @@ importers:
       '@lynx-js/lynx-ui-common':
         specifier: workspace:*
         version: link:../lynx-ui-common
+      '@lynx-js/lynx-ui-input':
+        specifier: workspace:*
+        version: link:../lynx-ui-input
       clsx:
         specifier: 'catalog:'
         version: 2.1.1

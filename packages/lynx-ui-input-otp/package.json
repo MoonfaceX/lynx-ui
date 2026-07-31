@@ -19,6 +19,7 @@
     "src/**",
     "README.md",
     "CHANGELOG.md",
+    "LICENSE",
     "tsconfig.docs.json",
     "tsconfig.json",
     "dist/**"
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "@lynx-js/lynx-ui-common": "workspace:*",
+    "@lynx-js/lynx-ui-input": "workspace:*",
     "clsx": "catalog:"
   },
   "devDependencies": {

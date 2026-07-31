@@ -90,6 +90,9 @@ Examples should use the in-repo LUNA theme foundation by default instead of ad-h
 - Prefer semantic LUNA tokens over literal color values.
 - When you need the exact token names or meanings, look them up in the in-repo `luna/` workspace and the imported LUNA styles source used by the example.
 - Use token semantics rather than visual guesses. Choose surface, content, accent, backdrop, divider, or gradient roles based on purpose, then resolve the exact token from the source of truth in `luna/`.
+- Put styles and local CSS variables shared by multiple examples for one component in `apps/examples/<Component>/shared/base.css`, then import that base stylesheet from each example stylesheet.
+- Define repeated literal colors once as semantically named local CSS variables, such as `--negative`, instead of duplicating the literal across example styles. Register shared files that declare non-LUNA variables in `extraTokenFiles` in `stylelint.config.cjs`.
+- Give scrollable example content enough top padding to clear device safe areas such as the iPhone Dynamic Island.
 - After adding or editing demo CSS, run `pnpm check:luna-vars` from `lynx-ui-open-source` to verify every referenced CSS variable is known.
 - Fix every `check:luna-vars` violation before handing off or submitting the demo change.
 - When an example needs RTL support, set `direction: rtl` on the outer container and let descendants inherit it through CSS instead of duplicating directional styles on every node.
@@ -146,7 +149,7 @@ This library follows the **Headless** pattern, focusing on logic, state manageme
 - **State via Context**: Share state between parent and child components using React Context (e.g., `CheckboxContext`).
 - **Render Props / Children**: Support `children` as a function (render props) or standard children to pass state down for dynamic styling.
 - **Styling API**: Provide `className` and `style` props on all components to allow users to apply their own design system (or L.U.N.A tokens).
-- **State-based Class Names**: Components should not apply default class names, but users can use `className` props to apply state-based class names.
+- **State Variants**: Expose interactive state through documented `ui-*` variants, typed with a `<Component>UIVariants` interface, on the affected nodes. Treat these variants as the single state-styling contract: do not add parallel BEM state classes or state-specific style/class name props. Keep `className` and `style` for base styling, and use composition or render props when consumers need custom internal visuals.
 
 ### General
 
