@@ -1,0 +1,711 @@
+import { UIApiTable, ClassRenderPropTable, ClassRenderPropPreamble } from "@lynx-ui/index";
+
+
+
+### InputOTPSlot
+    Props for an individual InputOTP visual slot.
+
+<UIApiTable source={[
+  {
+    "name": "activeStyle",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Style applied while the slot contains the visual caret.\nIt overrides matching declarations in style."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "输入槽包含可视光标时应用的样式；同名声明会覆盖 style。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "caretClassName",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Class name added to the default visual caret."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "添加到默认可视光标的类名。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "caretStyle",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Style applied to the default visual caret."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "应用于默认可视光标的样式。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "className",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "className"
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "类名"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "digitClassName",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Class name added to the default rendered character."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "添加到默认渲染字符的类名。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "digitStyle",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Style applied to the default rendered character."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "应用于默认渲染字符的样式。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "index",
+    "type": "number",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Zero-based index used to read the corresponding InputOTP character."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "从零开始的索引，用于读取 InputOTP 中对应的字符。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": false,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "invalidStyle",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Style applied while InputOTP is invalid. It overrides matching\ndeclarations in style and activeStyle."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "InputOTP 无效时应用的样式；同名声明会覆盖 style 和 activeStyle。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "style",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "style"
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "样式"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  }
+]}/>
+
+<UIApiTable source={[
+  {
+    "name": "children",
+    "type": "ReactNode | [object Object]",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Custom slot content. A render function receives the slot state.\nWhen omitted, InputOTPSlot renders its character and visual caret."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "自定义输入槽内容。渲染函数会接收输入槽状态。省略时，\nInputOTPSlot 会渲染默认字符和可视光标。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": {
+      "tag": "@docTypeFallback",
+      "content": [
+        {
+          "kind": "text",
+          "text": "ReactNode | ((state: InputOTPSlotRenderProps) => ReactNode)"
+        }
+      ]
+    }
+  }
+]}/>
+<ClassRenderPropPreamble />
+<ClassRenderPropTable source={[
+  {
+    "className": "ui-char",
+    "Render Prop": "char",
+    "item": {
+      "type": "string",
+      "description": "Character displayed by this slot.\nApplied when `status.char` is true.",
+      "description_zh": "当前输入槽展示的字符。"
+    }
+  },
+  {
+    "className": "ui-disabled",
+    "Render Prop": "disabled",
+    "item": {
+      "type": "boolean",
+      "description": "Whether input is disabled.\nApplied when `status.disabled` is true.",
+      "description_zh": "输入是否已禁用。"
+    }
+  },
+  {
+    "className": "ui-hasFakeCaret",
+    "Render Prop": "hasFakeCaret",
+    "item": {
+      "type": "boolean",
+      "description": "Whether this slot should display the visual caret.\nApplied when `status.hasFakeCaret` is true.",
+      "description_zh": "当前输入槽是否应展示可视光标。"
+    }
+  },
+  {
+    "className": "ui-index",
+    "Render Prop": "index",
+    "item": {
+      "type": "number",
+      "description": "Zero-based slot index.\nApplied when `status.index` is true.",
+      "description_zh": "从零开始的输入槽索引。"
+    }
+  },
+  {
+    "className": "ui-invalid",
+    "Render Prop": "invalid",
+    "item": {
+      "type": "boolean",
+      "description": "Whether the field is invalid.\nApplied when `status.invalid` is true.",
+      "description_zh": "输入是否处于无效状态。"
+    }
+  },
+  {
+    "className": "ui-isActive",
+    "Render Prop": "isActive",
+    "item": {
+      "type": "boolean",
+      "description": "Whether this is the active slot.\nApplied when `status.isActive` is true.",
+      "description_zh": "当前输入槽是否激活。"
+    }
+  },
+  {
+    "className": "ui-isFilled",
+    "Render Prop": "isFilled",
+    "item": {
+      "type": "boolean",
+      "description": "Whether this slot contains a character.\nApplied when `status.isFilled` is true.",
+      "description_zh": "当前输入槽是否已经包含字符。"
+    }
+  }
+]}/>
+
+
+
+### InputOTP
+    Props for InputOTP.
+
+<UIApiTable source={[
+  {
+    "name": "autoFocus",
+    "type": "boolean",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Focus the hidden input after mounting."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "挂载后自动聚焦隐藏输入框。"
+      }
+    ],
+    "defaultValue": "false",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "className",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "className"
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "类名"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "defaultValue",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Initial value in uncontrolled mode."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "非受控模式下的初始值。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Disable keyboard input and focus."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "禁用键盘输入和聚焦。"
+      }
+    ],
+    "defaultValue": "false",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "inputType",
+    "type": "InputOTPInputType",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Character set accepted by the hidden native input."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "隐藏的原生输入框接受的字符集。"
+      }
+    ],
+    "defaultValue": "\"numeric\"",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "invalid",
+    "type": "boolean",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Expose the invalid state to render props and ui-invalid classes."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "通过渲染属性和 ui-invalid 类暴露无效状态。"
+      }
+    ],
+    "defaultValue": "false",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "length",
+    "type": "InputOTPLength",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Number of OTP or PIN characters."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "OTP 或 PIN 字符数。"
+      }
+    ],
+    "defaultValue": "6",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "onBlur",
+    "type": "() => void",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Called when the hidden input loses focus."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "隐藏输入框失焦时触发。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "onChange",
+    "type": "(value: string) => void",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Called after the normalized value changes."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "规范化后的值变化时触发。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "onComplete",
+    "type": "(value: string) => void",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Called when the value transitions from incomplete to complete."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "输入值从未完成变为完整时触发。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "onFocus",
+    "type": "() => void",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Called when the hidden input gains focus."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "隐藏输入框聚焦时触发。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "ref",
+    "type": "ForwardedRef",
+    "summary": [],
+    "summary_zh": [],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": false,
+    "isSupportAndroid": false,
+    "isSupportHarmony": false,
+    "docTypeFallback": null
+  },
+  {
+    "name": "style",
+    "type": "CSSProperties",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "style"
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "样式"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
+    "name": "value",
+    "type": "string",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Controlled value. Characters outside inputType are discarded."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "受控值；不符合 inputType 的字符会被丢弃。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  }
+]}/>
+
+<UIApiTable source={[
+  {
+    "name": "children",
+    "type": "ReactNode | [object Object]",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "InputOTPSlot children, or a render function receiving the field state.\nInputOTP does not create slots automatically."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "InputOTPSlot 子节点，或接收输入状态的渲染函数。InputOTP\n不会自动创建输入槽。"
+      }
+    ],
+    "defaultValue": "",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": {
+      "tag": "@docTypeFallback",
+      "content": [
+        {
+          "kind": "text",
+          "text": "ReactNode | ((state: InputOTPRenderProps) => ReactNode)"
+        }
+      ]
+    }
+  }
+]}/>
+<ClassRenderPropPreamble />
+<ClassRenderPropTable source={[
+  {
+    "className": "ui-complete",
+    "Render Prop": "complete",
+    "item": {
+      "type": "boolean",
+      "description": "Whether every slot is filled.\nApplied when `status.complete` is true.",
+      "description_zh": "是否所有输入槽均已填充。"
+    }
+  },
+  {
+    "className": "ui-disabled",
+    "Render Prop": "disabled",
+    "item": {
+      "type": "boolean",
+      "description": "Whether input is disabled.\nApplied when `status.disabled` is true.",
+      "description_zh": "输入是否已禁用。"
+    }
+  },
+  {
+    "className": "ui-focused",
+    "Render Prop": "focused",
+    "item": {
+      "type": "boolean",
+      "description": "Whether the hidden native input is focused.\nApplied when `status.focused` is true.",
+      "description_zh": "隐藏的原生输入框是否聚焦。"
+    }
+  },
+  {
+    "className": "ui-inputType",
+    "Render Prop": "inputType",
+    "item": {
+      "type": "InputOTPInputType",
+      "description": "The configured input character set.\nApplied when `status.inputType` is true.",
+      "description_zh": "配置的输入字符集。"
+    }
+  },
+  {
+    "className": "ui-invalid",
+    "Render Prop": "invalid",
+    "item": {
+      "type": "boolean",
+      "description": "Whether the field is invalid.\nApplied when `status.invalid` is true.",
+      "description_zh": "输入是否处于无效状态。"
+    }
+  },
+  {
+    "className": "ui-length",
+    "Render Prop": "length",
+    "item": {
+      "type": "InputOTPLength",
+      "description": "The configured field length.\nApplied when `status.length` is true.",
+      "description_zh": "配置的输入长度。"
+    }
+  },
+  {
+    "className": "ui-value",
+    "Render Prop": "value",
+    "item": {
+      "type": "string",
+      "description": "The normalized OTP or PIN value.\nApplied when `status.value` is true.",
+      "description_zh": "规范化后的 OTP 或 PIN 值。"
+    }
+  }
+]}/>

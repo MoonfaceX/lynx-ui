@@ -153,6 +153,19 @@ export type {
   KeyboardAwareRootProps,
 } from '@lynx-js/lynx-ui-input'
 
+// input-otp
+export { InputOTP, InputOTPSlot } from '@lynx-js/lynx-ui-input-otp'
+export type {
+  InputOTPInputType,
+  InputOTPLength,
+  InputOTPProps,
+  InputOTPRef,
+  InputOTPRenderProps,
+  InputOTPSlotProps,
+  InputOTPSlotRenderProps,
+  InputOTPUiVariants,
+} from '@lynx-js/lynx-ui-input-otp'
+
 // lazy-component
 export { LazyComponent } from '@lynx-js/lynx-ui-lazy-component'
 export type {

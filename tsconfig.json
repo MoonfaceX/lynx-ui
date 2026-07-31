@@ -33,6 +33,9 @@
       "path": "./packages/lynx-ui-input"
     },
     {
+      "path": "./packages/lynx-ui-input-otp"
+    },
+    {
       "path": "./packages/lynx-ui-lazy-component"
     },
     {

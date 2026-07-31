@@ -31,6 +31,7 @@ describe('skill-lynx-ui generator helpers', () => {
   it('maps component slugs to example app names', () => {
     expect(getExampleAppDirname('scroll-view')).toBe('ScrollView')
     expect(getExampleAppDirname('feed-list')).toBe('FeedList')
+    expect(getExampleAppDirname('input-otp')).toBe('InputOTP')
   })
 
   it('maps component slugs to OSS example app paths', () => {
@@ -54,6 +55,7 @@ describe('skill-lynx-ui generator helpers', () => {
 
     expect(slugs).toContain('dialog')
     expect(slugs).toContain('button')
+    expect(slugs).toContain('input-otp')
     expect(slugs).toContain('popover')
     expect(slugs).toContain('sheet')
     expect(slugs).toContain('slider')

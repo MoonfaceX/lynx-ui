@@ -35,6 +35,11 @@
       "useWhen": "The user needs text entry or keyboard-aware input layout behavior.",
       "avoidWhen": "The content is read-only text."
     },
+    "input-otp": {
+      "label": "InputOTP",
+      "useWhen": "The user needs four- or six-character numeric, alphabetic, or alphanumeric OTP, PIN, or verification-code entry.",
+      "avoidWhen": "The input length is variable or a conventional editable text field is required."
+    },
     "lazy-component": {
       "label": "LazyComponent",
       "useWhen": "An expensive subtree should defer mounting until it approaches visibility.",

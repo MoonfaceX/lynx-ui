@@ -39,6 +39,10 @@ export function toPascalCase(value) {
 }
 
 export function getExampleAppDirname(componentSlug) {
+  if (componentSlug === 'input-otp') {
+    return 'InputOTP'
+  }
+
   return toPascalCase(componentSlug)
 }
 

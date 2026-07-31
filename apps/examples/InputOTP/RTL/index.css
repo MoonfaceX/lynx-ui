@@ -1,0 +1,21 @@
+.rtl-page {
+  direction: rtl;
+  background-color: var(--canvas-ambient);
+}
+
+.rtl-title {
+  color: var(--content);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: right;
+}
+
+.rtl-description {
+  margin-top: 8px;
+  margin-bottom: 24px;
+  color: var(--content-subtle);
+  font-size: 14px;
+  line-height: 22px;
+  text-align: right;
+}

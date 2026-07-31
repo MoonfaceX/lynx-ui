@@ -38,6 +38,7 @@
     "@lynx-js/lynx-ui-feed-list": "workspace:*",
     "@lynx-js/lynx-ui-form": "workspace:*",
     "@lynx-js/lynx-ui-input": "workspace:*",
+    "@lynx-js/lynx-ui-input-otp": "workspace:*",
     "@lynx-js/lynx-ui-lazy-component": "workspace:*",
     "@lynx-js/lynx-ui-list": "workspace:*",
     "@lynx-js/lynx-ui-popover": "workspace:*",

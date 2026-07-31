@@ -74,6 +74,10 @@ const primitivesConfig: Record<string, string[]> = {
     'SliderIndicator',
     'SliderThumb',
   ],
+  'lynx-ui-input-otp': [
+    'InputOTP',
+    'InputOTPSlot',
+  ],
 }
 export async function runTypeDocForPackage(
   entryPoints: string | string[],

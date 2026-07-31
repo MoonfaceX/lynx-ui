@@ -1,0 +1,103 @@
+@import "@lynx-js/luna-styles/index.css";
+
+* {
+  box-sizing: border-box;
+}
+
+.demo-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+  background-color: var(--canvas);
+}
+
+.luna-gradient-berry {
+  background: linear-gradient(
+    0deg,
+    var(--gradient-b),
+    var(--gradient-c)
+  );
+}
+
+.demo-card,
+.cap-section {
+  padding: 32px;
+  border-radius: 20px;
+  background-color: var(--paper);
+}
+
+.otp-field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.otp-slot {
+  min-width: 0;
+  height: 54px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--line);
+  border-radius: 10px;
+  background-color: var(--neutral-ambient);
+}
+
+.otp-slot.ui-active {
+  border-color: var(--primary);
+  background-color: var(--paper-clear);
+}
+
+.otp-field.ui-disabled {
+  opacity: 0.42;
+}
+
+.otp-field.ui-invalid .otp-slot {
+  border-color: #ff453a;
+}
+
+.otp-digit {
+  color: var(--content);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+}
+
+.otp-caret {
+  width: 2px;
+  height: 24px;
+  border-radius: 1px;
+  background-color: var(--primary);
+  animation-name: otp-caret-blink;
+  animation-duration: 1.1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes otp-caret-blink {
+  0%,
+  40% {
+    opacity: 1;
+  }
+
+  50%,
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
