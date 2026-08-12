@@ -9,6 +9,7 @@ const defaultConfig = exampleConfig({
   ScrollViewBounces: './Bounces/index.tsx',
   ScrollViewBouncesRTL: './BouncesRTL/index.tsx',
   ScrollViewInnerFlex: './InnerFlex/index.tsx',
+  ScrollViewNativeUseBounces: './NativeUseBounces/index.tsx',
   ScrollViewScrollBy: './ScrollBy/index.tsx',
   ScrollViewZIndex: './ZIndex/index.tsx',
 }, { needWeb: false })

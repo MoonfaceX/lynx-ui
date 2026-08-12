@@ -13,6 +13,7 @@ import {
   LayoutEventsMapping,
   ScrollEventsMapping,
   TouchEventsMapping,
+  nativeLynxSDKVersionLessThan,
   useRegisteredEvents,
 } from '@lynx-js/lynx-ui-common'
 import { LazyComponent } from '@lynx-js/lynx-ui-lazy-component'
@@ -83,6 +84,7 @@ function ScrollViewImpl(
     },
     enableScroll = true,
     enableScrollMonitor = false,
+    enableNewArch: enableNewArchProp,
     scrollMonitorTag,
     sticky,
     scrollPropagationBehavior = 'native',
@@ -94,6 +96,8 @@ function ScrollViewImpl(
     androidTouchSlop,
     'main-thread:gesture': gesture,
   } = props
+  const enableNewArch = enableNewArchProp
+    ?? !nativeLynxSDKVersionLessThan('4.3')
   // generates binding events dynamically
   const scrollViewRegisteredEvents = useRef<Record<string, string>>({
     ...ScrollEventsMapping,
@@ -139,9 +143,12 @@ function ScrollViewImpl(
     bounceableProps.validAnimationVersion =
       bounceableOptions.validAnimationVersion ?? true
   }
-  // Only when the enableBounces is true and singleSidedBounce is set to 'iOSBounces' will it use default bounces effect on iOS.
-  const platformBounces = enableBounce
-    && bounceableProps?.singleSidedBounce === 'iOSBounces'
+  // The new architecture provides native bounces on every platform. On the
+  // legacy architecture, native bounces are only used for iOSBounces.
+  const nativeBounces = enableBounce
+    && (enableNewArch
+      ? bounceableProps.singleSidedBounce !== 'none'
+      : bounceableProps.singleSidedBounce === 'iOSBounces')
 
   const shouldEnableNested = () => {
     if (
@@ -185,6 +192,8 @@ function ScrollViewImpl(
   type ExtendedScrollViewElementProps = ScrollViewElementProps & {
     'scroll-x': boolean
     'scroll-y': boolean
+    'scroll-orientation'?: 'horizontal' | 'vertical'
+    'scroll-view-new-arch'?: boolean
   }
   const elementProps: ExtendedScrollViewElementProps & {
     'enable-scroll-monitor': boolean
@@ -208,6 +217,10 @@ function ScrollViewImpl(
     'id': scrollviewId,
     'scroll-x': isHorizontal(),
     'scroll-y': !isHorizontal(),
+    ...(enableNewArch && {
+      'scroll-orientation': isHorizontal() ? 'horizontal' : 'vertical',
+      'scroll-view-new-arch': true,
+    }),
     'enable-scroll-monitor': enableScrollMonitor,
     'scroll-monitor-tag': scrollMonitorTag,
     'main-thread:gesture': gesture,
@@ -224,7 +237,7 @@ function ScrollViewImpl(
     'enable-new-nested': true,
     'className': className,
     'style': normalizedStyle,
-    'bounces': platformBounces,
+    'bounces': nativeBounces,
     'enable-scroll': enableScroll,
     ...(androidTouchSlop !== undefined
       && { 'android-touch-slop': androidTouchSlop }),
@@ -237,7 +250,32 @@ function ScrollViewImpl(
     ...registerEvents,
   }
 
-  if (
+  if (enableNewArch) {
+    if (
+      nativeBounces
+      && (bounceableProps.upperBounceItem
+        || bounceableProps.lowerBounceItem
+        || bounceableProps.onScrollToBounces)
+    ) {
+      return (
+        <ScrollViewWithBouncesHook
+          elementProps={elementProps}
+          bounceableOptions={bounceableProps}
+          debugLog={debugLog}
+          enableRTL={enableRTL}
+          nativeBounces={true}
+          sticky={sticky}
+        >
+          {renderChildren(children, normalizedLazyOptions)}
+        </ScrollViewWithBouncesHook>
+      )
+    }
+    return (
+      <ScrollViewBasic elementProps={elementProps} sticky={sticky}>
+        {renderChildren(children, normalizedLazyOptions)}
+      </ScrollViewBasic>
+    )
+  } else if (
     enableBounce
     && bounceableProps.singleSidedBounce !== 'iOSBounces'
     && bounceableProps.singleSidedBounce !== 'none'

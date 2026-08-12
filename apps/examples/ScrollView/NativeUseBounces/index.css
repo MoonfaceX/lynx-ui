@@ -1,0 +1,136 @@
+@import "@lynx-js/luna-styles/index.css";
+
+.demo-container {
+  width: 100%;
+  height: 100%;
+  padding: 36px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--canvas);
+}
+
+.header {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.title {
+  color: var(--content);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.description {
+  color: var(--content-subtle);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.metrics {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-radius: 12px;
+  background-color: var(--paper);
+}
+
+.metric {
+  color: var(--content-subtle);
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background-color: var(--canvas);
+}
+
+.metric--event {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.scroll-view {
+  background-color: var(--paper);
+}
+
+.scroll-content {
+  width: 100%;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(
+    180deg,
+    var(--gradient-a),
+    var(--gradient-b),
+    var(--gradient-c),
+    var(--gradient-d)
+  );
+}
+
+.card {
+  width: 100%;
+  height: 88px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 16px;
+  background-color: var(--canvas);
+}
+
+.card__index {
+  width: 52px;
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.card__copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.card__title {
+  color: var(--content);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card__subtitle {
+  color: var(--content-subtle);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.bounce-item {
+  width: 100%;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bounce-item--upper {
+  background-color: var(--primary);
+}
+
+.bounce-item--lower {
+  background-color: var(--primary-2);
+}
+
+.bounce-item__label {
+  color: var(--gradient-content);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bounce-item__hint {
+  color: var(--gradient-content);
+  font-size: 12px;
+  margin-top: 4px;
+}

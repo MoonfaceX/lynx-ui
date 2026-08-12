@@ -10,7 +10,9 @@ import type {
   ScrollViewProps as ScrollViewElementProps,
 } from '@lynx-js/types'
 
+import { getBounceWrapperStyle } from './bounceWrapperUtils'
 import { useBounce } from './hooks/useBounce'
+import { useNativeBounce } from './hooks/useNativeBounce'
 import type {
   BounceableBasicProps,
   ScrollViewProps,
@@ -26,6 +28,7 @@ function ScrollViewWithBouncesHook(
     bounceableOptions?: BounceableBasicProps
     debugLog?: boolean
     enableRTL?: boolean
+    nativeBounces?: boolean
     sticky?: ReactElement
   },
   _ref: ForwardedRef<ScrollViewRef>,
@@ -37,6 +40,7 @@ function ScrollViewWithBouncesHook(
     elementProps,
     debugLog = false,
     enableRTL = false,
+    nativeBounces = false,
   } = props
   // @ts-expect-error Compatible with older versions
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -45,6 +49,7 @@ function ScrollViewWithBouncesHook(
     ?? elementProps['scroll-y'] === false
   const scrollViewId = elementProps.id
   const { style } = elementProps as { style: CSSProperties }
+  const bounceWrapperStyle = getBounceWrapperStyle(style, Boolean(horizontal))
   // Initialize bounceableProps
   let enableBounce = false
   let bounceableProps: BounceableBasicProps = { enableBounces: false }
@@ -73,6 +78,16 @@ function ScrollViewWithBouncesHook(
     id: scrollViewId,
     scrollOrientation: horizontal ? 'horizontal' : 'vertical',
   })
+  const nativeBounceMTSProps = useNativeBounce({
+    bounceableOptions: bounceableProps,
+    debugLog,
+    enableRTL,
+    id: scrollViewId,
+    scrollOrientation: horizontal ? 'horizontal' : 'vertical',
+  })
+  const activeBounceMTSProps = nativeBounces
+    ? nativeBounceMTSProps
+    : bounceMTSProps
   if (enableBounce) {
     if (bounceableProps.upperBounceItem) {
       startBounceView = (
@@ -108,7 +123,7 @@ function ScrollViewWithBouncesHook(
         </view>
       )
     }
-    upperExposureView = (
+    upperExposureView = !nativeBounces && (
       <view
         style={`display: flex; flex-direction: column; overflow:hidden; height: ${
           horizontal ? '100%' : '1ppx'
@@ -121,7 +136,7 @@ function ScrollViewWithBouncesHook(
         main-thread:gesture={elementProps['main-thread:gesture']}
       />
     )
-    lowerExposureView = (
+    lowerExposureView = !nativeBounces && (
       <view
         style={`display: flex; flex-direction: column; overflow:hidden; height: ${
           horizontal ? '100%' : '1ppx'
@@ -139,15 +154,14 @@ function ScrollViewWithBouncesHook(
   return (
     <view
       id={`${scrollViewId}-BounceWrapper`}
-      style={`display: flex; flex-direction: column; overflow:hidden; height: ${
-        horizontal ? '100%' : `${style?.height}`
-      }; width: ${horizontal ? `${style?.width}` : '100%'};`}
+      flatten={false}
+      style={bounceWrapperStyle}
       main-thread:gesture={elementProps['main-thread:gesture']}
     >
       <scroll-view
         {...elementProps}
-        {...bounceMTSProps}
-        bounces={false}
+        {...activeBounceMTSProps}
+        bounces={nativeBounces}
         ios-enable-simultaneous-touch={true}
         // This is a workaround for using RL3.0-ver 0.110.1 and SDK-ver <=3.4. It will force the scroll-view to update after the BTS is ready and flush the 'name' prop along with __AddEvents. Otherwise, a pure __AddEvents will be discarded by the engine and won't trigger the flush of the prop_bundle. As a result, all events will be lost.
         // We do not use __MAIN_THREAD__ here to maintain compatibility with the old version of @lynx-js/react.

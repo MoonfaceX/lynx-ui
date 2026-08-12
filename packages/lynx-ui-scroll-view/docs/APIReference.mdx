@@ -144,6 +144,92 @@ import { UIApiTable, ClassRenderPropTable } from "@lynx-ui/index";
     "docTypeFallback": null
   },
   {
+    "name": "enableNewArch",
+    "type": "boolean",
+    "summary": [
+      {
+        "kind": "text",
+        "text": "Enable the native "
+      },
+      {
+        "kind": "code",
+        "text": "`<scroll-view>`"
+      },
+      {
+        "kind": "text",
+        "text": " new architecture. When enabled, "
+      },
+      {
+        "kind": "code",
+        "text": "`bounceableOptions`"
+      },
+      {
+        "kind": "text",
+        "text": " uses native bounces on Android, iOS, and Harmony. Defaults to "
+      },
+      {
+        "kind": "code",
+        "text": "`true`"
+      },
+      {
+        "kind": "text",
+        "text": " on Lynx SDK 4.3 and newer, and "
+      },
+      {
+        "kind": "code",
+        "text": "`false`"
+      },
+      {
+        "kind": "text",
+        "text": " on earlier versions."
+      }
+    ],
+    "summary_zh": [
+      {
+        "kind": "text",
+        "text": "启用原生 "
+      },
+      {
+        "kind": "code",
+        "text": "`<scroll-view>`"
+      },
+      {
+        "kind": "text",
+        "text": " 新架构。启用后，"
+      },
+      {
+        "kind": "code",
+        "text": "`bounceableOptions`"
+      },
+      {
+        "kind": "text",
+        "text": " 会在 Android、iOS 和 Harmony 上使用原生回弹。Lynx SDK 4.3 及以上版本默认为 "
+      },
+      {
+        "kind": "code",
+        "text": "`true`"
+      },
+      {
+        "kind": "text",
+        "text": "，更早版本默认为 "
+      },
+      {
+        "kind": "code",
+        "text": "`false`"
+      },
+      {
+        "kind": "text",
+        "text": "。"
+      }
+    ],
+    "defaultValue": "true on Lynx SDK >= 4.3; false otherwise",
+    "isOption": true,
+    "isSupportIOS": true,
+    "isSupportAndroid": true,
+    "isSupportHarmony": true,
+    "docTypeFallback": null
+  },
+  {
     "name": "enableRTL",
     "type": "boolean",
     "summary": [
@@ -846,7 +932,7 @@ import { UIApiTable, ClassRenderPropTable } from "@lynx-ui/index";
     "docTypeFallback": null
   }
 ]}/>
-      
+
 ### Events
 <UIApiTable source={[
   {
@@ -1224,7 +1310,6 @@ import { UIApiTable, ClassRenderPropTable } from "@lynx-ui/index";
     "docTypeFallback": null
   }
 ]}/>
-      
 
 ### BounceableBasicProps
 
@@ -1601,7 +1686,3 @@ import { UIApiTable, ClassRenderPropTable } from "@lynx-ui/index";
     "docTypeFallback": null
   }
 ]}/>
-    
-      
-
-  

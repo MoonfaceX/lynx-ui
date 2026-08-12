@@ -179,6 +179,15 @@ export interface ScrollViewProps
    */
   enableScrollMonitor?: boolean
   /**
+   * Enable the native `<scroll-view>` new architecture. When enabled, `bounceableOptions` uses native bounces on Android, iOS, and Harmony. Defaults to `true` on Lynx SDK 4.3 and newer, and `false` on earlier versions.
+   * @zh 启用原生 `<scroll-view>` 新架构。启用后，`bounceableOptions` 会在 Android、iOS 和 Harmony 上使用原生回弹。Lynx SDK 4.3 及以上版本默认为 `true`，更早版本默认为 `false`。
+   * @defaultValue `true on Lynx SDK >= 4.3; false otherwise`
+   * @Android
+   * @iOS
+   * @Harmony
+   */
+  enableNewArch?: boolean
+  /**
    * The tag for scroll monitor.
    * @zh 滚动监控的标签。
    * @defaultValue false
