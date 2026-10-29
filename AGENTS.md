@@ -203,6 +203,7 @@ This library follows the **Headless** pattern, focusing on logic, state manageme
 ### General
 
 - **TypeScript**: Use strict typing. Avoid `any`.
+- **Type Naming**: Interfaces and type aliases must use PascalCase (for example, `UseRefreshOptions`, not `useRefreshOptions`), including internal hook/helper types.
 - **Side Effects**: Component packages must declare `"sideEffects": false` in `package.json`, including packages that import component styles. Do not add CSS glob allowlists to `sideEffects`.
 - **Comments**: All code comments **MUST** be written in English.
 - **Functional Components**: Use React Functional Components with Hooks.
